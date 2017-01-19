@@ -15,7 +15,7 @@ class CommentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title',TextType::class)
+        $builder->add('title',TextType::class,['data'=> "None"])
             ->add('text',TextAreaType::class);
             /*->add('post'r); контекст поста к которому будет прекреплён коммент
                 например по айди или заголовку*/
