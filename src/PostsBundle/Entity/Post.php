@@ -170,6 +170,14 @@ class Post
         $this->comments->removeElement($comment);
     }
 
+    /**
+     *
+     */
+    public function __toString()
+    {
+        return (string)$this->getId();
+    }
+
 
 }
 

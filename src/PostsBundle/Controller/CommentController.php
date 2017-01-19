@@ -50,9 +50,9 @@ class CommentController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
             $em->flush($comment);
-
-            return $this->redirectToRoute('comment_show', [
-                'id' => $comment->getId()]);
+            return $this->redirectToRoute('post_show', [
+                'id' => $comment->getPost()->getId()
+            ]);
         }
 
         return $this->render('PostsBundle:comment:new.html.twig', array(
