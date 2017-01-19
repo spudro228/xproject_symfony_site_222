@@ -9,9 +9,11 @@ comment_show:
     methods:  GET
 
 comment_new:
-    path:     /new
+    path:     /new/{post_id}
     defaults: { _controller: "PostsBundle:Comment:new" }
-    methods:  [GET, POST]
+    requirements:
+            methods:  POST
+            post_id: \d+
 
 comment_edit:
     path:     /{id}/edit

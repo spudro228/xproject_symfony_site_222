@@ -124,7 +124,7 @@ class Comment
     }
 
     /**
-     * @return mixed
+     * @return Post
      */
     public function getPost()
     {
@@ -132,7 +132,7 @@ class Comment
     }
 
     /**
-     * @param mixed $post
+     * @param Post $post
      */
     public function setPost($post)
     {

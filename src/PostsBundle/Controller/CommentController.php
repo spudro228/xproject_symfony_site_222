@@ -15,18 +15,19 @@ use Symfony\Component\HttpFoundation\Request;
 class CommentController extends Controller
 {
     /**
-     * Lists all comment entities.
+     * Отображение формы комментария
      *
      */
-    public function indexAction()
+    public function indexAction($post_id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $comments = $em->getRepository('PostsBundle:Comment')->findAll();
-
-        return $this->render('PostsBundle:comment:index.html.twig', array(
-            'comments' => $comments,
-        ));
+        $post = $this->getPost($post_id);
+        $comment = new Comment();
+        $comment->setPost($post);
+        $form = $this->createForm(CommentType::class, $comment);
+        return $this->render('@Posts/comment/form.html.twig', [
+            'comment' => $comment,
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -35,12 +36,13 @@ class CommentController extends Controller
      * @param $post_id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request,$post_id)
+    public function newAction(Request $request, $post_id)
     {
         //todo:: доделать
-        $form = $this->getPost($post_id);
+        $post = $this->getPost($post_id);
 
         $comment = new Comment();
+        $comment->setPost($post);
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -49,7 +51,8 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush($comment);
 
-            return $this->redirectToRoute('comment_show', array('id' => $comment->getId()));
+            return $this->redirectToRoute('comment_show', [
+                'id' => $comment->getId()]);
         }
 
         return $this->render('PostsBundle:comment:new.html.twig', array(
@@ -128,14 +131,14 @@ class CommentController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('comment_delete', array('id' => $comment->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 
-    private function getPost($post_id){
+    private function getPost($post_id)
+    {
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository(Post::class)->find($post_id);
-        if(!$post){
+        if (!$post) {
             throw $this->createNotFoundException("не найдет Post по заданному ID");
         }
         return $post;

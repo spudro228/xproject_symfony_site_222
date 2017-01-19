@@ -6,7 +6,9 @@
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
-    <schema id="3" parent="1" name="mysql"/>
+    <schema id="3" parent="1" name="mysql">
+      <Visible>1</Visible>
+    </schema>
     <schema id="4" parent="1" name="performance_schema"/>
     <schema id="5" parent="1" name="sys"/>
     <schema id="6" parent="1" name="symfony"/>

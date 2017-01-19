@@ -6,14 +6,13 @@
 
 
         <div class="content">
-                <div class="content"><span>{{ post.id }}</span>
-                    <span><s>{{ post.title }}</s></span>
-                    <span>{{ post.author }}</span>
-                    <span>{% if post.createAt %}{{ post.createAt|date('Y-m-d H:i:s') }}{% endif %}</span>
-                    <br/>
-                    <p>{{ post.text }}</p>
-                </div>
-
+            <div class="content"><span>{{ post.id }}</span>
+                <span><s>{{ post.title }}</s></span>
+                <span>{{ post.author }}</span>
+                <span>{% if post.createAt %}{{ post.createAt|date('Y-m-d H:i:s') }}{% endif %}</span>
+                <br/>
+                <p>{{ post.text }}</p>
+            </div>
         </div>
     </div>
 
@@ -34,5 +33,4 @@
 
 
     {{ include('@Posts/comment/index.html.twig', {'comments':comments} ) }}
-
 {% endblock %}
