@@ -49,7 +49,7 @@ class Comment
      *
      * @ORM\Column(type="text")
      */
-    private $title;
+    private $title = "None";
 
     /**
      * @var string
