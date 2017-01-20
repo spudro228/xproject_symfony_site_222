@@ -21,13 +21,11 @@ class Post
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        /*$metadata->addPropertyConstraint('title', new Assert\Length([
-                'min' => 0,
+        $metadata->addPropertyConstraint('title', new Assert\Length([
                 'max' => 50,
                 'maxMessage' => 'Your title cannot be longer than 50 characters.'
             ]
-        ));*/
-
+        ));
         /*$metadata->addPropertyConstraints('title', [
             new Assert\Blank(),
             new Assert\Length([
