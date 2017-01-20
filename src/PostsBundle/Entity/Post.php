@@ -3,10 +3,11 @@
 namespace PostsBundle\Entity;
 
 
-
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -17,6 +18,32 @@ use Symfony\Component\Validator\Constraints\DateTime;
  */
 class Post
 {
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        /*$metadata->addPropertyConstraint('title', new Assert\Length([
+                'min' => 0,
+                'max' => 50,
+                'maxMessage' => 'Your title cannot be longer than 50 characters.'
+            ]
+        ));*/
+
+        /*$metadata->addPropertyConstraints('title', [
+            new Assert\Blank(),
+            new Assert\Length([
+                'max' => 50,
+                'maxMessage' => 'Your title cannot be longer than 50 characters.'
+            ])
+        ]);*/
+        $metadata->addPropertyConstraints('text', [
+            new Assert\NotBlank(),
+            new Assert\Length([
+                'max' => 1500,
+                'maxMessage' => 'Your text message cannot be longer than 1500 characters.'
+            ])
+        ]);
+    }
+
     /**
      * @var int
      *
@@ -29,9 +56,9 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $title;
+    private $title = null;
 
     /**
      * @var string
@@ -45,7 +72,7 @@ class Post
      *
      * @ORM\Column(type="text", length=100)
      */
-    private $author;
+    private $author = 'anonymous';
 
     /**
      * @var string
@@ -150,7 +177,7 @@ class Post
 
     /**
      * Add comment
-     * 
+     *
      * @param Comment $comment
      * @return Post
      */
