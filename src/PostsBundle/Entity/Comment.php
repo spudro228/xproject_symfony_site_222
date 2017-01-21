@@ -5,8 +5,6 @@ namespace PostsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\DateTime;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -17,24 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Comment
 {
-
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addPropertyConstraint('title',
-            new Assert\Length([
-                'max' => 50,
-                'maxMessage' => 'Your title cannot be longer than 50 characters.'
-            ])
-        );
-        $metadata->addPropertyConstraints('text', [
-            new Assert\NotBlank(),
-            new Assert\Length([
-                'max' => 1500,
-                'maxMessage' => 'Your text message cannot be longer than 1500 characters.'
-            ])
-        ]);
-    }
-
     /**
      * @var int
      *
@@ -144,7 +124,7 @@ class Comment
     }
 
     /**
-     * @return Post
+     * @return mixed
      */
     public function getPost()
     {
@@ -152,7 +132,7 @@ class Comment
     }
 
     /**
-     * @param Post $post
+     * @param mixed $post
      */
     public function setPost($post)
     {

@@ -3,8 +3,6 @@
 namespace PostsBundle\Controller;
 
 use PostsBundle\Entity\Comment;
-use PostsBundle\Entity\Post;
-use PostsBundle\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,44 +13,37 @@ use Symfony\Component\HttpFoundation\Request;
 class CommentController extends Controller
 {
     /**
-     * Отображение формы комментария
+     * Lists all comment entities.
      *
      */
-    public function indexAction($post_id)
+    public function indexAction()
     {
-        $post = $this->getPost($post_id);
-        $comment = new Comment();
-        $comment->setPost($post);
-        $form = $this->createForm(CommentType::class, $comment);
-        return $this->render('@Posts/comment/form.html.twig', [
-            'comment' => $comment,
-            'form' => $form->createView()
-        ]);
+        $em = $this->getDoctrine()->getManager();
+
+        $comments = $em->getRepository('PostsBundle:Comment')->findAll();
+
+        return $this->render('PostsBundle:comment:index.html.twig', array(
+            'comments' => $comments,
+        ));
     }
 
     /**
      * Creates a new comment entity.
      * @param Request $request
-     * @param $post_id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request, $post_id)
+    public function newAction(Request $request)
     {
-        //todo:: доделать
-        $post = $this->getPost($post_id);
-
         $comment = new Comment();
-        $comment->setPost($post);
-        $form = $this->createForm(CommentType::class, $comment);
+        $form = $this->createForm('PostsBundle\Form\CommentType', $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
             $em->flush($comment);
-            return $this->redirectToRoute('post_show', [
-                'id' => $comment->getPost()->getId()
-            ]);
+
+            return $this->redirectToRoute('comment_show', array('id' => $comment->getId()));
         }
 
         return $this->render('PostsBundle:comment:new.html.twig', array(
@@ -67,7 +58,6 @@ class CommentController extends Controller
      */
     public function showAction(Comment $comment)
     {
-
         $deleteForm = $this->createDeleteForm($comment);
 
         return $this->render('PostsBundle:comment:show.html.twig', array(
@@ -131,16 +121,7 @@ class CommentController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('comment_delete', array('id' => $comment->getId())))
             ->setMethod('DELETE')
-            ->getForm();
-    }
-
-    private function getPost($post_id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository(Post::class)->find($post_id);
-        if (!$post) {
-            throw $this->createNotFoundException("не найдет Post по заданному ID");
-        }
-        return $post;
+            ->getForm()
+        ;
     }
 }

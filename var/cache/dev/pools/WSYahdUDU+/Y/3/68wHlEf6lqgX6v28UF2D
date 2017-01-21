@@ -1,0 +1,3 @@
+1516506770
+%255BPostsBundle%255CEntity%255CPost%2524comments%2540%255BAnnot%255D%255D%255B1%255D
+a:1:{i:0;O:30:"Doctrine\ORM\Mapping\OneToMany":6:{s:8:"mappedBy";s:4:"post";s:12:"targetEntity";s:7:"Comment";s:7:"cascade";N;s:5:"fetch";s:4:"LAZY";s:13:"orphanRemoval";b:0;s:7:"indexBy";N;}}

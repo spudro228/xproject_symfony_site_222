@@ -3,8 +3,6 @@
 namespace PostsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,13 +13,9 @@ class CommentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title',TextType::class,['data'=> "None"])
-            ->add('text',TextAreaType::class);
-            /*->add('post'r); контекст поста к которому будет прекреплён коммент
-                например по айди или заголовку*/
-
+        $builder->add('title')->add('text')->add('createAt')->add('post')        ;
     }
-
+    
     /**
      * {@inheritdoc}
      */

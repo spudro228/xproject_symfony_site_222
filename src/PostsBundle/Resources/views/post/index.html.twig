@@ -2,6 +2,27 @@
 
 
 {% block body %}
+    <style>
+        table {
+            border: 4px double black; /* Параметры границы */
+            background: #CCCCCC; /* Цвет фона */
+            padding: 10px; /* Поля вокруг текста */
+        }
+
+        .go {
+            border: none;
+        }
+
+        li {
+            list-style-type: none;
+            border: 1px solid black; /* Убираем маркеры */
+            margin: 10px;
+        }
+
+        .post {
+            margin: 10px;
+        }
+    </style>
     <h1>Posts list</h1>
 
     <table>
@@ -35,19 +56,24 @@
         {% endfor %}
         </tbody>#}
     </table>
-    <ul class="posts">
+    <ul>
         {% for post in posts %}
             <li>
                 <div class="post">
                     <span><a href="{{ path('post_show', { 'id': post.id }) }}">{{ post.id }}</a></span>
-                    <span><s>{{ post.author }}</s></span>
-                    <span >{{ post.title }}</span>
-                    
-                    <p>{{ post.text }}</p>
+                    <span>{{ post.author }}</span>
+                    <span>{{ post.title }}</span>
+                    <br/>
+                    {{ post.text }}
 
-                    {#<a href="{{ path('post_edit', { 'id': post.id }) }}" class="pure-button pure-button-primary">edit</a>#}
-                    <a href="{{ path('post_show', { 'id': post.id }) }}" class="pure-button pure-button-primary">show</a>
+                    <ul>
+                        <li class="go">
 
+                            {# Заменить на кнопки#}
+                            <span><a href="{{ path('post_edit', { 'id': post.id }) }}">edit</a></span>
+                            <span><a href="{{ path('post_show', { 'id': post.id }) }}">show</a></span>
+                        </li>
+                    </ul>
                 </div>
             </li>
 

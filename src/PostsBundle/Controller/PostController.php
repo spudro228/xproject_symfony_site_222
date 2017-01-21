@@ -23,7 +23,6 @@ class PostController extends Controller
 
         $posts = $em->getRepository('PostsBundle:Post')->findAll();
 
-
         return $this->render('PostsBundle:post:index.html.twig', array(
             'posts' => $posts,
         ));

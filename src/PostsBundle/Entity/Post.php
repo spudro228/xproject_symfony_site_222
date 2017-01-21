@@ -17,6 +17,33 @@ use Symfony\Component\Validator\Constraints\DateTime;
  */
 class Post
 {
+<<<<<<< HEAD
+=======
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('title', new Assert\Length([
+                'max' => 50,
+                'maxMessage' => 'Your title cannot be longer than 50 characters.'
+            ]
+        ));
+        /*$metadata->addPropertyConstraints('title', [
+            new Assert\Blank(),
+            new Assert\Length([
+                'max' => 50,
+                'maxMessage' => 'Your title cannot be longer than 50 characters.'
+            ])
+        ]);*/
+        $metadata->addPropertyConstraints('text', [
+            new Assert\NotBlank(),
+            new Assert\Length([
+                'max' => 1500,
+                'maxMessage' => 'Your text message cannot be longer than 1500 characters.'
+            ])
+        ]);
+    }
+
+>>>>>>> 7f4ec4d... test1
     /**
      * @var int
      *
@@ -168,14 +195,6 @@ class Post
     public function removeComment(Comment $comment)
     {
         $this->comments->removeElement($comment);
-    }
-
-    /**
-     *
-     */
-    public function __toString()
-    {
-        return (string)$this->getId();
     }
 
 

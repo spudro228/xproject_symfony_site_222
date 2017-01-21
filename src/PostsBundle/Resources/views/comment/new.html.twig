@@ -1,14 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Add comment for post#{{ comment.post.id }}</h1>
+    <h1>Comment creation</h1>
 
-    {#{{ form_start(form) }}
+    {{ form_start(form) }}
         {{ form_widget(form) }}
         <input type="submit" value="Create" />
-    {{ form_end(form) }}#}
-
-    {% include 'PostsBundle:comment:form.html.twig' with {'form':form} %}
+    {{ form_end(form) }}
 
     <ul>
         <li>

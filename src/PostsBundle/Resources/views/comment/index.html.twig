@@ -37,7 +37,7 @@
 
     <ul>
         <li>
-            {#{{ render(controller('PostsBundle:Comment:new')) }}#}
+            <a href="{{ path('comment_new') }}">Create a new comment</a>
         </li>
     </ul>
 {% endblock %}
