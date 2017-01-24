@@ -47,6 +47,9 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($comment->getAuthor() === null || $comment->getAuthor() === ''){
+                $comment-> setAuthor('anonymous');
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
             $em->flush($comment);

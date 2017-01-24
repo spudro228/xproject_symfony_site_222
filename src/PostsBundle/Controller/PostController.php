@@ -41,6 +41,10 @@ class PostController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //Значение по умолчанию для пустого поля title
+            if($post->getAuthor() === null || $post->getAuthor() === ''){
+                $post->setAuthor('antonymous');
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush($post);
@@ -56,7 +60,8 @@ class PostController extends Controller
 
     /**
      * Finds and displays a post entity.
-     *
+     * @param Post $post
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Post $post)
     {

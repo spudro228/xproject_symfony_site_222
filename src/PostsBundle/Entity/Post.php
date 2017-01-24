@@ -19,20 +19,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Post
 {
 
+    /**
+     * Валидация формы.
+     * @param ClassMetadata $metadata
+     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
+        //todo: добавить валидацию author
         $metadata->addPropertyConstraint('title', new Assert\Length([
                 'max' => 50,
                 'maxMessage' => 'Your title cannot be longer than 50 characters.'
             ]
         ));
-        /*$metadata->addPropertyConstraints('title', [
-            new Assert\Blank(),
-            new Assert\Length([
-                'max' => 50,
-                'maxMessage' => 'Your title cannot be longer than 50 characters.'
-            ])
-        ]);*/
+
         $metadata->addPropertyConstraints('text', [
             new Assert\NotBlank(),
             new Assert\Length([
@@ -68,9 +67,9 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(type="text", length=100)
+     * @ORM\Column(type="text", length=100, nullable=true)
      */
-    private $author = 'anonymous';
+    private $author;
 
     /**
      * @var string

@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-
 /**
  * Comments
  *
@@ -19,6 +18,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Comment
 {
 
+    /**
+     * Валидация формы.
+     * @param ClassMetadata $metadata
+     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('title',
@@ -48,9 +51,9 @@ class Comment
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $title = "None";
+    private $title;
 
     /**
      * @var string
@@ -58,6 +61,13 @@ class Comment
      * @ORM\Column(type="text")
      */
     private $text;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", length=100, nullable=true)
+     */
+    private $author = 'anonymous';
 
     /**
      * @var string
@@ -122,6 +132,22 @@ class Comment
     public function setText($text)
     {
         $this->text = $text;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param string $author
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
     }
 
     /**
