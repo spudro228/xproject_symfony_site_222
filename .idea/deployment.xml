@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="s_site">
+  <component name="PublishConfigData" serverName="project-demo">
     <serverData>
-      <paths name="s_site">
+      <paths name="joomlagame">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="project-demo">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="xproject_symfony_site_222" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="symfony example">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
