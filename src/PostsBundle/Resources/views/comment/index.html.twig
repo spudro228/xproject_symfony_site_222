@@ -7,6 +7,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Author</th>
                 <th>Title</th>
                 <th>Text</th>
                 <th>Createat</th>
@@ -17,6 +18,7 @@
         {% for comment in comments %}
             <tr>
                 <td><a href="{{ path('comment_show', { 'id': comment.id }) }}">{{ comment.id }}</a></td>
+                <td>{{ comment.author }}</td>
                 <td>{{ comment.title }}</td>
                 <td>{{ comment.text }}</td>
                 <td>{% if comment.createAt %}{{ comment.createAt|date('Y-m-d H:i:s') }}{% endif %}</td>

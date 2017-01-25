@@ -67,7 +67,7 @@ class Comment
      *
      * @ORM\Column(type="text", length=100, nullable=true)
      */
-    private $author = 'anonymous';
+    private $author;
 
     /**
      * @var string
