@@ -179,7 +179,7 @@ class Comment
     }
 
     /**
-     * @param Post $post
+     * @param Post|object $post
      */
     public function setPost($post)
     {

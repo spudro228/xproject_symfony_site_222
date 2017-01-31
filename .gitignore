@@ -25,3 +25,4 @@
 /purging
 /composer.lock
 /php
+.idea/

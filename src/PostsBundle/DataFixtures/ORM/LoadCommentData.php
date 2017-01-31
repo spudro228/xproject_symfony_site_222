@@ -19,6 +19,9 @@ use PostsBundle\Entity\Comment;
 class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 {
 
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $comment = new Comment();
