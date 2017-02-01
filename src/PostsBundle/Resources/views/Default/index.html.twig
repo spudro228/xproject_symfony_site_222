@@ -1,1 +1,10 @@
-Hello Wrld!!!
+{% extends('base.html.twig') %}
+
+{% block body %}
+    {{ render(controller('FOSUserBundle:Security:login')) }}
+
+    <a href="{{ logout_path('main') }}">Logout</a>
+    <a href="{{ logout_path(token) }}">Logout2</a>
+    {{ token }}
+
+{% endblock body %}

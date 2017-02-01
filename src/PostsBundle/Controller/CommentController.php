@@ -45,8 +45,9 @@ class CommentController extends Controller
         $comment->setPost($post);
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-        $userName = $token = $this->get('security.token_storage')->getToken()->getUsername();
-        $token = $this->get('security.token_storage')->getToken()->getUsername();
+        $userName  = $this->get('security.token_storage')->getToken()->getUsername();
+        $token = $this->get('security.firewall.map')->getFirewallConfig($request)->getProvider();
+
         //echo $token;
 
 
