@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PostController extends Controller
 {
-
+    //todo:: убать нахуй ненужные акшоны и мб еще немного почистить код
     /**
      * Lists all post entities.
      *
