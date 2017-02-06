@@ -54,9 +54,7 @@
         {% endfor %}
     </ul>
 
-    <ul>
-        <li>
-            <a href="{{ path('post_new') }}">Create a new post</a>
-        </li>
-    </ul>
+    {{ render(controller('PostsBundle:Post:new')) }}
+
+    {#{{ render(controller('PostsBundle:Post:form')) }}#}
 {% endblock %}

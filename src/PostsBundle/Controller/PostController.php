@@ -4,6 +4,7 @@ namespace PostsBundle\Controller;
 
 use PostsBundle\Entity\Comment;
 use PostsBundle\Entity\Post;
+use PostsBundle\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PostController extends Controller
 {
+
     /**
      * Lists all post entities.
      *
@@ -23,10 +25,14 @@ class PostController extends Controller
 
         $posts = $em->getRepository('PostsBundle:Post')->findAll();
 
+        $post = new Post();
+        $form = $this->createForm(PostType::class, $post);
+
         echo $token = $this->get('security.token_storage')->getToken()->getUsername();
-        return $this->render('PostsBundle:post:index.html.twig', array(
+        return $this->render('PostsBundle:post:index.html.twig', [
             'posts' => $posts,
-        ));
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -37,12 +43,12 @@ class PostController extends Controller
     public function newAction(Request $request)
     {
         $post = new Post();
-        $form = $this->createForm('PostsBundle\Form\PostType', $post);
+        $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             //Значение по умолчанию для пустого поля title
-            if($post->getAuthor() === null || $post->getAuthor() === ''){
+            if ($post->getAuthor() === null || $post->getAuthor() === '') {
                 $post->setAuthor('antonymous');
             }
             $em = $this->getDoctrine()->getManager();
@@ -52,10 +58,9 @@ class PostController extends Controller
             return $this->redirectToRoute('post_show', array('id' => $post->getId()));
         }
 
-        return $this->render('PostsBundle:post:new.html.twig', array(
-            'post' => $post,
+        return $this->render('PostsBundle:post:new.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**

@@ -38,7 +38,6 @@ class CommentController extends Controller
      */
     public function newAction(Request $request, $post_id)
     {
-        //todo:: доделать
         $post = $this->getPost($post_id);
 
         $comment = new Comment();
@@ -49,8 +48,6 @@ class CommentController extends Controller
         $token = $this->get('security.firewall.map')->getFirewallConfig($request)->getProvider();
 
         //echo $token;
-
-
         if ($form->isSubmitted() && $form->isValid()) {
             /*
              * Дополнительная проверка на анонимаса.
