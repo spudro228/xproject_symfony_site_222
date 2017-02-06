@@ -1,10 +1,10 @@
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /user
 
 posts:
     resource: "@PostsBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /post
 
 app:
     resource: "@AppBundle/Controller/"
