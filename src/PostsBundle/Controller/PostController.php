@@ -28,7 +28,6 @@ class PostController extends Controller
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
 
-        echo $token = $this->get('security.token_storage')->getToken()->getUsername();
         return $this->render('PostsBundle:post:index.html.twig', [
             'posts' => $posts,
             'form' => $form->createView(),
@@ -48,8 +47,12 @@ class PostController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             //Значение по умолчанию для пустого поля title
-            if ($post->getAuthor() === null || $post->getAuthor() === '') {
+            if (!$this->get('security.token_storage')->getToken()->isAuthenticated()) {
                 $post->setAuthor('antonymous');
+            } else {
+                /** @var string $userName - получаем его из текущей сессии */
+                $userName = $this->get('security.token_storage')->getToken()->getUsername();
+                $post->setAuthor($userName);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);

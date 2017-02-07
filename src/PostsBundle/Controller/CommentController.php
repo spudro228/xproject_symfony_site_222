@@ -14,49 +14,34 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CommentController extends Controller
 {
-    /**
-     * Отображение формы комментария
-     *
-     */
-    public function indexAction($post_id)
-    {
-        $post = $this->getPost($post_id);
-        $comment = new Comment();
-        $comment->setPost($post);
-        $form = $this->createForm(CommentType::class, $comment);
-        return $this->render('@Posts/comment/form.html.twig', [
-            'comment' => $comment,
-            'form' => $form->createView()
-        ]);
-    }
 
     /**
-     * Creates a new comment entity.
+     * Creates a new comment.
+     *
      * @param Request $request
-     * @param $post_id
+     * @param int $post_id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request, $post_id)
     {
+
         $post = $this->getPost($post_id);
 
         $comment = new Comment();
         $comment->setPost($post);
+
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-        $userName  = $this->get('security.token_storage')->getToken()->getUsername();
-        $token = $this->get('security.firewall.map')->getFirewallConfig($request)->getProvider();
 
-        //echo $token;
         if ($form->isSubmitted() && $form->isValid()) {
-            /*
-             * Дополнительная проверка на анонимаса.
-             * Имхо, избыточна, но пруфов нету.
-             * $comment->getAuthor() === null || $comment->getAuthor() === ''
+            /**
+             *  Если не залогинены, то постим от лица анона.
              */
-            if ($this->isGranted('IS_AUTHENTICATED_ANONYMOUSLY')) {
+            if (!$this->get('security.token_storage')->getToken()->isAuthenticated()) {
                 $comment->setAuthor('anonymous');
             } else {
+                /** @var string $userName - получаем его из текущей сессии */
+                $userName = $this->get('security.token_storage')->getToken()->getUsername();
                 $comment->setAuthor($userName);
             }
 
@@ -148,12 +133,19 @@ class CommentController extends Controller
             ->getForm();
     }
 
+
+    /**
+     * Get post by Id.
+     *
+     * @param int $post_id
+     * @return null|object|Post
+     */
     private function getPost($post_id)
     {
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository(Post::class)->find($post_id);
         if (!$post) {
-            throw $this->createNotFoundException("не найдет Post по заданному ID");
+            throw $this->createNotFoundException("Не найдет Post по заданному ID");
         }
         return $post;
     }
