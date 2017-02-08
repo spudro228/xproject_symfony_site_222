@@ -6,8 +6,10 @@
                 <a href="{{ path('fos_user_security_logout') }}">
                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                 </a>
-                {# добавляет ссылку на форму авторизции
-                {% else %}
+{#
+                 добавляет ссылку на форму авторизции
+#}
+                {#{% else %}
                 <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>#}
 
             {% endif %}
