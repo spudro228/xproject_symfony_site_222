@@ -2,6 +2,8 @@
 
 namespace PostsBundle\Controller;
 
+use FileUploadBundle\Entity\File;
+use FileUploadBundle\Form\FileType;
 use PostsBundle\Entity\Comment;
 use PostsBundle\Entity\Post;
 use PostsBundle\Form\PostType;
@@ -44,8 +46,9 @@ class PostController extends Controller
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
+        $file = new File();
+        $fileForm = $this->createForm(FileType::class, $file);
         if ($form->isSubmitted() && $form->isValid()) {
-            //Значение по умолчанию для пустого поля title
             if (!$this->get('security.token_storage')->getToken()->isAuthenticated()) {
                 $post->setAuthor('antonymous');
             } else {
@@ -53,6 +56,8 @@ class PostController extends Controller
                 $userName = $this->get('security.token_storage')->getToken()->getUsername();
                 $post->setAuthor($userName);
             }
+
+            //todo: форма есть, теперь правильно загрузить и записать
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush($post);
@@ -62,6 +67,7 @@ class PostController extends Controller
 
         return $this->render('PostsBundle:post:new.html.twig', [
             'form' => $form->createView(),
+            'fileForm' => $fileForm->createView()
         ]);
     }
 

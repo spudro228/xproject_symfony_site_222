@@ -1,0 +1,4 @@
+services:
+#    file_upload.example:
+#        class: FileUploadBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

@@ -3,6 +3,7 @@
 {% block body %}
     <h2>Post creation</h2>
 
-    {% include 'PostsBundle:post:form.html.twig' with {'form':form} %}
+    {% include 'PostsBundle:post:form.html.twig' with {'form':form, 'fileForm': fileForm} %}
+
 
 {% endblock %}

@@ -7,3 +7,6 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+      file_uploader:
+          class: FileUploadBundle\Service\FileUploader
+          arguments: ["%files_directory%"]

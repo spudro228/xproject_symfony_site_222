@@ -86,6 +86,13 @@ class Post
     private $comments;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $image;
+
+    /**
      * Post constructor.
      */
     public function __construct()
@@ -200,6 +207,23 @@ class Post
     public function __toString()
     {
         return (string)$this->getId();
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        //todo: сделать чтобы вытаскивал из файла
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
     }
 
 
