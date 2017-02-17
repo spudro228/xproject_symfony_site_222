@@ -3,6 +3,7 @@
 namespace PostsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,6 +19,7 @@ class CommentType extends AbstractType
         $builder->add('title', TextType::class, ['required' => false]);
         $builder->add('author', TextType::class, ['required' => false]);
         $builder->add('text', TextAreaType::class);
+        $builder->add('image', FileType::class, ['required' => false]);
 
         /*->add('post'); контекст поста к которому будет прекреплён коммент
             например по айди или заголовку*/

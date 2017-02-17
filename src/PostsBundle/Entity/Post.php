@@ -88,10 +88,8 @@ class Post
 
     /**
      *
-     *
      * @ORM\Column(type="string", nullable=true)
      * @Assert\File(mimeTypes={ "image/jpeg" })
-     *
      */
     private $image;
 

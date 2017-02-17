@@ -45,6 +45,13 @@ class CommentController extends Controller
                 $comment->setAuthor($userName);
             }
 
+            try {
+                $fileName = $this->get('file_uploader')->upload($comment->getImage());
+                $comment->setImage($fileName);
+            } catch (\ErrorException $error) {
+                /* тобы не писать null обработчик в upload */
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
             $em->flush($comment);

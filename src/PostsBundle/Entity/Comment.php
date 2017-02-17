@@ -83,6 +83,25 @@ class Comment
      */
     private $post;
 
+    /**
+     *
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\File(mimeTypes={ "image/jpeg" })
+     */
+    private $image;
+
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
 
     /**
      * Comment constructor.
