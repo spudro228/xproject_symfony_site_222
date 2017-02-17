@@ -5,6 +5,7 @@ namespace PostsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -86,9 +87,11 @@ class Post
     private $comments;
 
     /**
-     * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     *
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\File(mimeTypes={ "image/jpeg" })
+     *
      */
     private $image;
 
@@ -209,23 +212,19 @@ class Post
         return (string)$this->getId();
     }
 
-    /**
-     * @return string
-     */
+
     public function getImage()
     {
-        //todo: сделать чтобы вытаскивал из файла
         return $this->image;
     }
 
-    /**
-     * @param string $image
-     */
+
     public function setImage($image)
     {
         $this->image = $image;
     }
 
-
 }
+
+
 

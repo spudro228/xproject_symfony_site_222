@@ -9,6 +9,7 @@ use PostsBundle\Entity\Post;
 use PostsBundle\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Post controller.
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PostController extends Controller
 {
+
     /**
      * Lists all post entities.
      *
@@ -42,13 +44,14 @@ class PostController extends Controller
      */
     public function newAction(Request $request)
     {
+        $log = $this->get('logger');
+
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
-        $file = new File();
-        $fileForm = $this->createForm(FileType::class, $file);
         if ($form->isSubmitted() && $form->isValid()) {
+            // Set Author
             if (!$this->get('security.token_storage')->getToken()->isAuthenticated()) {
                 $post->setAuthor('antonymous');
             } else {
@@ -57,17 +60,34 @@ class PostController extends Controller
                 $post->setAuthor($userName);
             }
 
-            //todo: форма есть, теперь правильно загрузить и записать
+            // Set Image
+            /** @var UploadedFile $file */
+            /*if (null != $file = $post->getImage()) {
+                $fileName = $this->get('file_uploader')->upload($file);
+                $post->setImage($fileName);
+            }*/
+
+            try {
+                $fileName = $this->get('file_uploader')->upload($post->getImage());
+                $post->setImage($fileName);
+            } catch (\ErrorException $error) {
+                /* тобы не писать null обработчик в upload */
+            }
+
+            // Persist
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
-            $em->flush($post);
+            $em->flush();
 
-            return $this->redirectToRoute('post_show', array('id' => $post->getId()));
+            // redirect to show post
+            return $this->redirectToRoute('post_show', [
+                'id' => $post->getId(),
+
+            ]);
         }
 
         return $this->render('PostsBundle:post:new.html.twig', [
-            'form' => $form->createView(),
-            'fileForm' => $fileForm->createView()
+            'form' => $form->createView()
         ]);
     }
 

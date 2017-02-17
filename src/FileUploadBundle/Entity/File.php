@@ -25,7 +25,6 @@ class File
      *
      * @ORM\Column(type="string", nullable=true)
      *
-     * @Assert\File(mimeTypes={ "image/jpg" })
      */
     private $file;
 

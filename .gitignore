@@ -26,4 +26,4 @@
 /composer.lock
 /php
 /.idea/
-/app/uploads/
+/web/uploads/

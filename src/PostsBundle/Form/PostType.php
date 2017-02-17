@@ -21,6 +21,7 @@ class PostType extends AbstractType
         $builder->add('title', TextType::class, ['required' => false]);
         $builder->add('author', TextType::class, ['required' => false]);
         $builder->add('text', TextareaType::class);
+        $builder->add('image', FileType::class, ['required' => false]);
     }
 
     /**
