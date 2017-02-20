@@ -2,6 +2,8 @@
 
 namespace PostsBundle\Repository;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
 /**
  * PostRepository
  *
@@ -10,8 +12,24 @@ namespace PostsBundle\Repository;
  */
 class PostRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function AUE()
+    public function findAllByPage($currentPage = 1, $limit = 10)
     {
-        return 0;
+        $query = $this->createQueryBuilder('post')
+            ->select('post')
+            ->setFirstResult($limit * ($currentPage - 1))
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        return new Paginator($query, $fetchJoinCollection = false);
     }
+
+    public function getTotal()
+    {
+        return $this->createQueryBuilder('post')->select('COUNT(post)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+
+    }
+
 }

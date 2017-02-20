@@ -20,13 +20,15 @@ class PostController extends Controller
 
     /**
      * Lists all post entities.
-     *
+     * @param $currentPage
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction($currentPage = 1)
     {
-        $em = $this->getDoctrine()->getManager();
+        $postsRepository = $this->getDoctrine()->getManager()->getRepository('PostsBundle:Post');
 
-        $posts = $em->getRepository('PostsBundle:Post')->findAll();
+        $limit = 5;
+        $posts = $postsRepository->findAllByPage($currentPage, $limit);
 
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -34,6 +36,9 @@ class PostController extends Controller
         return $this->render('PostsBundle:post:index.html.twig', [
             'posts' => $posts,
             'form' => $form->createView(),
+            'currentPage' => $currentPage,
+            'count' => $posts->getIterator()->count(),
+            'maxPages' => $postsRepository->getTotal()
         ]);
     }
 

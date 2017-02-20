@@ -1,7 +1,9 @@
 post_index:
-    path:     /
-    defaults: { _controller: "PostsBundle:Post:index" }
-    methods:  GET
+    path:     /{currentPage}
+    defaults: { _controller: "PostsBundle:Post:index" , currentPage:1}
+    requirements:
+                methods:  GET
+                post_id: \d+
 
 post_show:
     path:     /{id}/show

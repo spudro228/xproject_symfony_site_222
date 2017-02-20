@@ -2,6 +2,9 @@
 
 
 {% block body %}
+    <h2>count = {{ count }}</h2>
+    <h2>all = {{ maxPages }}</h2>
+    <h2>current = {{ currentPage }}</h2>
     <h1>Posts list</h1>
 
     <table>
@@ -45,10 +48,10 @@
 
                     <p>{{ post.text }}</p>
                     {% if post.image is not null %}
-                    <span>
+                        <span>
                             <a href="{{ absolute_url(asset("uploads/files/"~ post.image)) }}">{{ post.image }}</a></span>
-                    <br/>
-                    <img src="{{ asset("uploads/files/"~ post.image) }}" width="20%" height="20%">
+                        <br/>
+                        <img src="{{ asset("uploads/files/"~ post.image) }}" width="20%" height="20%">
                     {% endif %}
                     {#<a href="{{ path('post_edit', { 'id': post.id }) }}" class="pure-button pure-button-primary">edit</a>#}
                     <a href="{{ path('post_show', { 'id': post.id }) }}"
@@ -59,6 +62,13 @@
 
         {% endfor %}
     </ul>
+
+    {# Render each page number #}
+    {% for i in 1..maxPages%10 %}
+        <span>
+            <a href="{{ path('post_index', {currentPage: i}) }}">{{ i }}</a>
+        </span>
+    {% endfor %}
 
     {{ render(controller('PostsBundle:Post:new')) }}
 
