@@ -1,13 +1,11 @@
-{% extends 'base.html.twig' %}
-{% import ':default:macro.html.twig' as go %}
 {% block body %}
 
     <div class="layout">
         <h1>Post</h1>
 
 
-        <div class="content">
-            <div class="content"><span>{{ post.id }}</span>
+        <div class="">
+            <div class=""><span>{{ post.id }}</span>
                 <span><s>{{ post.title }}</s></span>
                 <span>{{ post.author }}</span>
                 <span>{% if post.createAt %}{{ post.createAt|date('Y-m-d H:i:s') }}{% endif %}</span>

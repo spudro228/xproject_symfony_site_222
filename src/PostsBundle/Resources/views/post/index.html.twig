@@ -1,10 +1,7 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-    <h2>count = {{ count }}</h2>
-    <h2>all = {{ maxPages }}</h2>
-    <h2>current = {{ currentPage }}</h2>
+
     <h1>Posts list</h1>
 
     <table>
@@ -38,10 +35,10 @@
         {% endfor %}
         </tbody>#}
     </table>
-    <ul class="posts">
+    <ul class="">
         {% for post in posts %}
             <li>
-                <div class="post">
+                <div class="">
                     <span><a href="{{ path('post_show', { 'id': post.id }) }}">{{ post.id }}</a></span>
                     <span><s>{{ post.author }}</s></span>
                     <span>{{ post.title }}</span>
@@ -55,7 +52,7 @@
                     {% endif %}
                     {#<a href="{{ path('post_edit', { 'id': post.id }) }}" class="pure-button pure-button-primary">edit</a>#}
                     <a href="{{ path('post_show', { 'id': post.id }) }}"
-                       class="pure-button pure-button-primary">show</a>
+                       class="">show</a>
 
                 </div>
             </li>

@@ -6,25 +6,24 @@
                 <a href="{{ path('fos_user_security_logout') }}">
                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                 </a>
-{#
-                 добавляет ссылку на форму авторизции
-#}
+                {#
+                                 добавляет ссылку на форму авторизции
+                #}
                 {#{% else %}
                 <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>#}
 
             {% endif %}
         </div>
 
-        {% if app.request.hasPreviousSession %}
-            {% for type, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
                     <div class="flash-{{ type }}">
                         {{ message }}
                     </div>
-                {% endfor %}
             {% endfor %}
-        {% endif %}
-
+        {% endfor %}
+    {% endif %}
         <div>
             {% block fos_user_content %}
             {% endblock fos_user_content %}

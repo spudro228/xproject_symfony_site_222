@@ -67,10 +67,6 @@ class PostController extends Controller
 
             // Set Image
             /** @var UploadedFile $file */
-            /*if (null != $file = $post->getImage()) {
-                $fileName = $this->get('file_uploader')->upload($file);
-                $post->setImage($fileName);
-            }*/
 
             try {
                 $fileName = $this->get('file_uploader')->upload($post->getImage());
