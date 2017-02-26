@@ -1,28 +1,24 @@
+{% extends '::base.html.twig' %}
 {% block body %}
+    <h1>Post</h1>
 
-    <div class="layout">
-        <h1>Post</h1>
+    <span>{{ post.id }}</span>
+    <span><s>{{ post.title }}</s></span>
+    <span>{{ post.author }}</span>
+    <span>{% if post.createAt %}{{ post.createAt|date('Y-m-d H:i:s') }}{% endif %}</span>
+    <br/>
+    <p>{{ post.text }}</p>
 
+    {# todo: вынести в отельнй подключаемы файл#}
+    {% if post.image is not null %}
 
-        <div class="">
-            <div class=""><span>{{ post.id }}</span>
-                <span><s>{{ post.title }}</s></span>
-                <span>{{ post.author }}</span>
-                <span>{% if post.createAt %}{{ post.createAt|date('Y-m-d H:i:s') }}{% endif %}</span>
-                <br/>
-                <p>{{ post.text }}</p>
-
-                {# todo: вынести в отельнй подключаемы файл#}
-                {% if post.image is not null %}
-
-                <span>
+        <span>
                  <a href="{{ absolute_url(asset("uploads/files/"~ post.image)) }}">{{ post.image }}</a></span>
-                <br/>
-                <img src="{{ asset("uploads/files/"~ post.image) }}" width="20%" height="20%">
-                {% endif %}
-            </div>
-        </div>
-    </div>
+        <br/>
+        <img src="{{ asset("uploads/files/"~ post.image) }}" width="20%" height="20%">
+    {% endif %}
+
+
 
 
     <a href="{{ path('post_index') }}" class="pure-button pure-button-primary">Go to index</a>
