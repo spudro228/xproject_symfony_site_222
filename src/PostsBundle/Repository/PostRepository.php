@@ -18,6 +18,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->select('post')
             ->setFirstResult($limit * ($currentPage - 1))
             ->setMaxResults($limit)
+            ->orderBy('post.id','DESC')
             ->getQuery();
 
         return new Paginator($query, $fetchJoinCollection = false);
