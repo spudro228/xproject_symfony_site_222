@@ -1,18 +1,18 @@
 {% block body %}
-    <div class="navbar-brand pull-right">
+    <ul class="nav navbar-nav navbar-right">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-            <a type="submit"
-               href="{{ path('fos_user_security_logout') }}">
-                 {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-            </a>
+            <li><a href="#"> {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} </a></li>
+            <li><a type="submit"
+                   href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a></li>
             {#
                              добавляет ссылку на форму авторизции
             #}
             {#{% else %}
             <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>#}
         {% endif %}
-    </div>
+    </ul>
 
     {% if app.request.hasPreviousSession %}
         {% for type, messages in app.session.flashbag.all() %}
