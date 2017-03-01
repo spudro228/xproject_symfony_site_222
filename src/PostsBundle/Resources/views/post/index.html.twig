@@ -39,14 +39,15 @@
         {% endfor %}
     </ul>
 
-    {# Render each page number #}
+    {#todo:: uncomented#}
+    {# Render each page number #}{#
     {% for i in 1..maxPages%10 %}
         <span>
             <a href="{{ path('post_index', {currentPage: i}) }}">{{ i }}</a>
         </span>
     {% endfor %}
 
-    {{ render(controller('PostsBundle:Post:new')) }}
+    {{ render(controller('PostsBundle:Post:new')) }}#}
 
     {#{{ render(controller('PostsBundle:Post:form')) }}#}
 {% endblock %}

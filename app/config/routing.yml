@@ -10,6 +10,13 @@ posts:
     resource: "@PostsBundle/Resources/config/routing.yml"
     prefix:   /post
 
+#todo:: удалить
+subject:
+    path: /{subj}
+    defaults: { _controller: PostsBundle:Subject:index }
+    requirements:
+                    methods:  GET
+                    post_id: string
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

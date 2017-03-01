@@ -22,21 +22,20 @@
                 <input class="form-control" type="password" id="password" name="_password" required="required"/>
 
 
-            <div class="checkbox">
-                <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
-                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-            </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+                    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                </div>
 
-            <input type="submit"
-                   class="btn btn-primary"
-                   id="_submit"
-                   name="_submit"
-                   value="{{ 'security.login.submit'|trans }}"/>
+                <input type="submit"
+                       class="btn btn-primary"
+                       id="_submit"
+                       name="_submit"
+                       value="{{ 'security.login.submit'|trans }}"/>
 
                 <a href="{{ path('fos_user_registration_register') }}"
                    class="btn btn-primary"
-                   type="submit"
-                   >Register</a>
+                   type="submit">To register</a>
             </div>
         </form>
     {% endif %}

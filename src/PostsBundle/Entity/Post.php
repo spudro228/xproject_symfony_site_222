@@ -87,6 +87,14 @@ class Post
     private $comments;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Subject", inversedBy="posts")
+     * @ORM\JoinColumn(name="subj_id", referencedColumnName="id")
+     */
+    private $subject;
+
+
+
+    /**
      *
      * @ORM\Column(type="string", nullable=true)
      * @Assert\File(mimeTypes={ "image/jpeg" })
@@ -220,6 +228,22 @@ class Post
     public function setImage($image)
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param mixed $subject
+     */
+    public function setSubject($subject)
+    {
+        $this->subject = $subject;
     }
 
 }

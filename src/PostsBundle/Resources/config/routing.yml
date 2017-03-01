@@ -1,6 +1,6 @@
 posts_post:
     resource: "@PostsBundle/Resources/config/routing/post.yml"
-    prefix:   /posts
+    prefix:   /
 
 posts_homepage:
     path:     /

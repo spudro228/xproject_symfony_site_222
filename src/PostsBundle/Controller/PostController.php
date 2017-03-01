@@ -32,7 +32,7 @@ class PostController extends Controller
 
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
-
+        //todo:: cleaned of excess
         return $this->render('PostsBundle:post:index.html.twig', [
             'posts' => $posts,
             'form' => $form->createView(),
@@ -49,7 +49,7 @@ class PostController extends Controller
      */
     public function newAction(Request $request)
     {
-        $log = $this->get('logger');
+        //$log = $this->get('logger');
 
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);

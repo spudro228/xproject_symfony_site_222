@@ -11,42 +11,39 @@
 
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <h1>Site name.</h1>
-    </div>
-    <div class="navbar navbar-inverse">
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#responsive-menu">Kek
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#responsive-menu">
                 </button>
             </div>
             <a class="navbar-brand" href="#"><img
                         src="{{ asset('uploads/files/2cf1065e98e946187e55acbaf110c1e9.jpeg') }}" width="25px"
                         height="25px"></a>
-            <div id="responsive-menu" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="#">Пункт 1</a></li>
-                    <li><a href="#">Пункт 2</a></li>
+            <div class="collapse navbar-collapse" id="responsive-menu">
+                <ul class="nav navbar-nav mr-auto">
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li><a href="{{ path('post_index') }}">All posts</a></li>
                     <li><a href="#">Пункт 3</a></li>
                     <li><a href="#">Пункт 4</a></li>
 
                 </ul>
-
                 {{ render(controller('FOSUserBundle:Security:login')) }}
-
-
-
             </div>
 
         </div>
-    </div>
+    </nav>
 
     <div class="container">
 
 
         {% block body %}{% endblock %}
+        <hr>
+        <footer>
+            <p>© Company Dimas 2017</p>
+        </footer>
     </div>
+
 
 
     <!-- Latest compiled and minified JavaScript -->
