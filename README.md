@@ -35,4 +35,10 @@ My project
 
 6. Добавить пагинацию страниц. 👌🏻
 
-7. Создать разделы/тематики. 🐌🐬
+7. Создать разделы/тематики. 👌🏻 👌🏻 👌🏻
+
+NOTES:
+----
+Package kherge/version is abandoned, you should avoid using it. No replacement was suggested.
+Package herrera-io/json is abandoned, you should avoid using it. Use kherge/json instead.
+Package herrera-io/phar-update is abandoned, you should avoid using it. No replacement was suggested.
