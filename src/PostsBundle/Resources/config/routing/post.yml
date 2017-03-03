@@ -11,9 +11,11 @@ post_show:
     methods:  GET
 
 post_new:
-    path:     /new
+    path:     /new/{subj}
     defaults: { _controller: "PostsBundle:Post:new" }
-    methods:  [GET, POST]
+    requirements:
+                methods:  POST
+                post_id: \w+
     #вот тута добавить дефолтный 0 для subj
 
 post_edit:

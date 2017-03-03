@@ -1,19 +1,18 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-{#
-    {{ render(controller('FOSUserBundle:Security:login')) }}
-#}
+    {#
+        {{ render(controller('FOSUserBundle:Security:login')) }}
+    #}
 
     <p>
         Я не могу в верстку и стили.
     </p>
 
-
-        <h1 class="display-3">Что дальше?</h1>
-        <a href="{{ path('post_index') }}" class="btn btn-primary">Просмотреть все посты!</a>
-    {{ render(controller('PostsBundle:Subject:index')) }}
+    <h1 class="display-3">Что дальше?</h1>
+    <a href="{{ path('post_index') }}" class="btn btn-primary">Просмотреть все посты!</a>
+    {{ render(controller('PostsBundle:Subject:getSubjects')) }}
     <h3>Написать свой.</h3>
-    {{ render(controller('PostsBundle:Post:new')) }}
+    {#{{ render(controller('PostsBundle:Post:new')) }}#}
 {% endblock %}
 
 

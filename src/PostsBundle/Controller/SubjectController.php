@@ -9,8 +9,8 @@
 namespace PostsBundle\Controller;
 
 
-
-
+use PostsBundle\Entity\Post;
+use Proxies\__CG__\PostsBundle\Entity\Subject;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,12 +18,27 @@ class SubjectController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository('PostsBundle:Subject');
+        $repository = $this->getDoctrine()->getRepository(Post::class);
 
-        $test = $repository->findBySubj();//$request->get('subj')
+        $test = $repository->findBySubj($request->get('subj'));
 
-        //return $this->render('@Posts/subject/index.html.twig',['body'=>$request->get('subj')]);
-        return $this->render('PostsBundle:post:index.html.twig', ['posts' => $test]);
+        //todo:: неплохо было бы maxPage убрать куда нибудб, чтобы не тоскать везде
+        return $this->render('PostsBundle:post:index.html.twig',
+            [
+                'posts' => $test,
+                'maxPages' => $repository->getTotal()
+
+            ]);
+    }
+
+    public function getSubjectsAction(Request $request)
+    {
+        $subjects = $this->getDoctrine()->getRepository(Subject::class)->findAll();
+
+        return $this->render('PostsBundle:subject:index.html.twig',
+            [
+                'subjects' => $subjects
+            ]);
     }
 
 }

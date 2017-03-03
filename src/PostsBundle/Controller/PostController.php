@@ -6,10 +6,12 @@ use FileUploadBundle\Entity\File;
 use FileUploadBundle\Form\FileType;
 use PostsBundle\Entity\Comment;
 use PostsBundle\Entity\Post;
+use PostsBundle\Entity\Subject;
 use PostsBundle\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Post controller.
@@ -25,7 +27,7 @@ class PostController extends Controller
      */
     public function indexAction($currentPage = 1)
     {
-        $postsRepository = $this->getDoctrine()->getManager()->getRepository('PostsBundle:Post');
+        $postsRepository = $this->getDoctrine()->getRepository(Post::class);
 
         $limit = 5;
         $posts = $postsRepository->findAllByPage($currentPage, $limit);
@@ -45,17 +47,25 @@ class PostController extends Controller
     /**
      * Creates a new post entity.
      * @param Request $request
+     * @param $subj
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, $subj)
     {
-        //$log = $this->get('logger');
+        /**
+         * 03.03.17
+         * todo:: 03.03.17 хуй его знает, провильно ли вконтроллере доставать это? или лучше в шаблоне ( как в коментариях - в шаблоне)
+         * todo:: посмотреть что будет быстрее и компактнее (исключающее)или читабельнее
+         */
+        $subject = $this->getSubject($subj);
 
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Set Subjext
+            $post->setSubject($subject);
             // Set Author
             if (!$this->get('security.token_storage')->getToken()->isAuthenticated()) {
                 $post->setAuthor('antonymous');
@@ -88,7 +98,8 @@ class PostController extends Controller
         }
 
         return $this->render('PostsBundle:post:new.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'subj' => $subject->getSubjName()
         ]);
     }
 
@@ -165,5 +176,22 @@ class PostController extends Controller
             ->setAction($this->generateUrl('post_delete', array('id' => $post->getId())))
             ->setMethod('DELETE')
             ->getForm();
+    }
+
+    /**
+     *  Get Subject obj by subj name.
+     * @param $subj
+     * @return null|object|Subject
+     */
+
+    private function getSubject($subj)
+    {
+        $result = $this->getDoctrine()->getManager()->getRepository(Subject::class)
+            ->findOneBy(['subjName' => $subj]);
+        if (!$result) {
+            throw $this->createNotFoundException("Не найде тема по заданному имени.{$subj}");
+        }
+        return $result;
+
     }
 }

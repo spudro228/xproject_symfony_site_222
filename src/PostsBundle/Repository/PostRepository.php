@@ -3,6 +3,9 @@
 namespace PostsBundle\Repository;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\ORM\Query\Expr;
+use PostsBundle\Entity\Post;
+use PostsBundle\Entity\Subject;
 
 /**
  * PostRepository
@@ -18,11 +21,26 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->select('post')
             ->setFirstResult($limit * ($currentPage - 1))
             ->setMaxResults($limit)
-            ->orderBy('post.id','DESC')
+            ->orderBy('post.id', 'DESC')
             ->getQuery();
 
         return new Paginator($query, $fetchJoinCollection = false);
     }
+
+    public function findBySubj($subj = "subj", $currentPage = 1, $limit = 10)
+    {
+        $query = $this->createQueryBuilder('post')
+            ->select('post')
+            ->join(Subject::class, 'subject', Expr\Join::WITH, 'post.subject = subject.id')
+            ->where('subject.subjName = :subjName')
+            ->setParameter('subjName',$subj)
+            ->setFirstResult($limit * ($currentPage - 1))
+            ->setMaxResults($limit)
+            ->orderBy('post.id', 'DESC')
+            ->getQuery();
+        return new Paginator($query, $fetchJoinCollection = false);
+    }
+
 
     public function getTotal()
     {

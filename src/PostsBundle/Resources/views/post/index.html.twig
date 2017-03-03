@@ -4,7 +4,7 @@
 
     <h1>Posts list</h1>
 
-    <table>
+    {#<table>
         <thead>
         <tr>
             <th>Id</th>
@@ -13,41 +13,54 @@
             <th>Text</th>
         </tr>
         </thead>
-    </table>
-    <ul class="">
+    </table>#}
+    <div class="well">
+        {% set post = posts.iterator.current %}
         {% for post in posts %}
-            <li>
-                <div class="">
+
+            <div class="media">
+                {% if post.image is not null %}
+                    <a class="pull-left" href="{{ absolute_url(asset("uploads/files/"~ post.image)) }}">
+                        <img class="media-object" src="{{ asset("uploads/files/"~ post.image) }}" width="170px"
+                             height="150px">
+                    </a>
+
+                {% endif %}
+                <div class="media-body">
+                    <h4 class="media-heading">{{ post.title }}</h4>
                     <span><a href="{{ path('post_show', { 'id': post.id }) }}">{{ post.id }}</a></span>
-                    <span><s>{{ post.author }}</s></span>
-                    <span>{{ post.title }}</span>
 
+                    <span class="text-right">{{ post.author }}</span>
                     <p>{{ post.text }}</p>
-                    {% if post.image is not null %}
-                        <span>
-                            <a href="{{ absolute_url(asset("uploads/files/"~ post.image)) }}">{{ post.image }}</a></span>
-                        <br/>
-                        <img src="{{ asset("uploads/files/"~ post.image) }}" width="20%" height="20%">
-                    {% endif %}
-                    {#<a href="{{ path('post_edit', { 'id': post.id }) }}" class="pure-button pure-button-primary">edit</a>#}
-                    <a href="{{ path('post_show', { 'id': post.id }) }}"
-                       class="">show</a>
-
+                    <ul class="list-inline list-unstyled">
+                        <li>
+                            <span><i class="glyphicon glyphicon-calendar"></i>{{ post.createAt|date('Y-m-d H:i:s') }}</span>
+                        </li>
+                        <li>|</li>
+                        <span><i class="glyphicon glyphicon-comment"></i> 000 comments</span>
+                        <li>|</li>
+                        <li><a href="{{ path('post_show', { 'id': post.id }) }}"
+                               class="">show</a>
+                        <li>
+                    </ul>
                 </div>
-            </li>
+
+            </div>
+            <hr>
 
         {% endfor %}
-    </ul>
+    </div>
 
-    {#todo:: uncomented#}
-    {# Render each page number #}{#
+
+    {# Render each page number #}
     {% for i in 1..maxPages%10 %}
         <span>
             <a href="{{ path('post_index', {currentPage: i}) }}">{{ i }}</a>
         </span>
     {% endfor %}
-
-    {{ render(controller('PostsBundle:Post:new')) }}#}
-
+    {#
+    <h2>subg:: {{ subj.subject.subjName }}</h2>
+    #}
+    {{ render(controller('PostsBundle:Post:new',{'subj': post.subject.subjName  })) }}
     {#{{ render(controller('PostsBundle:Post:form')) }}#}
 {% endblock %}

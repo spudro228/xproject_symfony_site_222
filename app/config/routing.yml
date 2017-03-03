@@ -16,7 +16,7 @@ subject:
     defaults: { _controller: PostsBundle:Subject:index }
     requirements:
                     methods:  GET
-                    post_id: string
+                    post_id: \w
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
