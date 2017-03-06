@@ -12,7 +12,13 @@
     <a href="{{ path('post_index') }}" class="btn btn-primary">Просмотреть все посты!</a>
     {{ render(controller('PostsBundle:Subject:getSubjects')) }}
     <h3>Написать свой.</h3>
+    <p class="h">Click me!</p>
+
+
     {#{{ render(controller('PostsBundle:Post:new')) }}#}
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/example.js') }}"></script>
 {% endblock %}
 
 

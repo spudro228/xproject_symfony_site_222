@@ -1,0 +1,6 @@
+subj_index:
+    path: /{subj}
+    defaults: { _controller: "PostsBundle:Subject:index" }
+        requirements:
+            methods: GET
+            post_id: \w

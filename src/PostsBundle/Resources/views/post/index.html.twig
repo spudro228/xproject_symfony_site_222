@@ -53,7 +53,7 @@
 
 
     {# Render each page number #}
-    {% for i in 1..maxPages%10 %}
+    {% for i in 1..(maxPages/5)| round(0, 'ceil') %}
         <span>
             <a href="{{ path('post_index', {currentPage: i}) }}">{{ i }}</a>
         </span>

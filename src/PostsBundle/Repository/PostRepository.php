@@ -27,13 +27,13 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($query, $fetchJoinCollection = false);
     }
 
-    public function findBySubj($subj = "subj", $currentPage = 1, $limit = 10)
+    public function findBySubj($subject = "subj", $currentPage = 1, $limit = 10)
     {
         $query = $this->createQueryBuilder('post')
             ->select('post')
             ->join(Subject::class, 'subject', Expr\Join::WITH, 'post.subject = subject.id')
             ->where('subject.subjName = :subjName')
-            ->setParameter('subjName',$subj)
+            ->setParameter('subjName',$subject)
             ->setFirstResult($limit * ($currentPage - 1))
             ->setMaxResults($limit)
             ->orderBy('post.id', 'DESC')
@@ -42,6 +42,9 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
+    /**
+     * @return mixed
+     */
     public function getTotal()
     {
         return $this->createQueryBuilder('post')->select('COUNT(post)')
@@ -49,6 +52,21 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->getSingleScalarResult();
 
 
+    }
+
+    /**
+     * @param $subject
+     * @return mixed
+     */
+    public function getTotalBySubj($subject)
+    {
+        return $this->createQueryBuilder('post')
+            ->select('COUNT(post)')
+            ->join(Subject::class, 'subject', Expr\Join::WITH, 'post.subject = subject.id')
+            ->where('subject.subjName = :subjName')
+            ->setParameter('subjName',$subject)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
 }

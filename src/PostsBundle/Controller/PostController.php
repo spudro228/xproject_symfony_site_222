@@ -39,7 +39,7 @@ class PostController extends Controller
             'posts' => $posts,
             'form' => $form->createView(),
             'currentPage' => $currentPage,
-            'count' => $posts->getIterator()->count(),
+            'count' => $postsRepository->getTotal(),
             'maxPages' => $postsRepository->getTotal()
         ]);
     }
@@ -78,11 +78,9 @@ class PostController extends Controller
             // Set Image
             /** @var UploadedFile $file */
 
-            try {
+            if ($post->getImage()){
                 $fileName = $this->get('file_uploader')->upload($post->getImage());
                 $post->setImage($fileName);
-            } catch (\ErrorException $error) {
-                /* тобы не писать null обработчик в upload */
             }
 
             // Persist

@@ -2,11 +2,11 @@ posts_post:
     resource: "@PostsBundle/Resources/config/routing/post.yml"
     prefix:   /
 
-posts_homepage:
-    path:     /
-    defaults: { _controller: PostsBundle:Default:index }
-
-
 posts_comment:
-        resource: "@PostsBundle/Resources/config/routing/comment.yml"
-        prefix:   /comment
+    resource: "@PostsBundle/Resources/config/routing/comment.yml"
+    prefix:   /comment
+
+#posts_subject:
+#    resource: "@PostsBundle/Resources/config/routing/subject.yml"
+#    prefix:   /
+

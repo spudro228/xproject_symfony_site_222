@@ -20,14 +20,13 @@ class SubjectController extends Controller
     {
         $repository = $this->getDoctrine()->getRepository(Post::class);
 
-        $test = $repository->findBySubj($request->get('subj'));
+        $posts = $repository->findBySubj($request->get('subj'));
 
         //todo:: неплохо было бы maxPage убрать куда нибудб, чтобы не тоскать везде
         return $this->render('PostsBundle:post:index.html.twig',
             [
-                'posts' => $test,
-                'maxPages' => $repository->getTotal()
-
+                'posts' => $posts,
+                'maxPages' => $repository->getTotalBySubj($request->get('subj'))
             ]);
     }
 

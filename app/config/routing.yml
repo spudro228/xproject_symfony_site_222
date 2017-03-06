@@ -12,6 +12,8 @@ posts:
 
 #todo:: удалить
 subject:
+#    resource: "@PostsBundle/Resources/config/routing.yml"
+#    prefix: /
     path: /{subj}
     defaults: { _controller: PostsBundle:Subject:index }
     requirements:
@@ -23,3 +25,5 @@ app:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+
