@@ -10,20 +10,25 @@ posts:
     resource: "@PostsBundle/Resources/config/routing.yml"
     prefix:   /post
 
+#todo:: так можно переделать нижний туду
+test:
+    resource: "@PostsBundle/Resources/config/routing/subject.yml"
+    prefix:   /
+
 #todo:: удалить
-subject:
-#    resource: "@PostsBundle/Resources/config/routing.yml"
-#    prefix: /
-    path: /{subj}
-    defaults: { _controller: PostsBundle:Subject:index }
-    requirements:
-                    methods:  GET
-                    post_id: \w
+#subject:
+#    path: /{subj}
+#    defaults: { _controller: PostsBundle:Subject:index }
+#    requirements:
+#                    methods:  GET
+#                    post_id: \w
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+
 
 

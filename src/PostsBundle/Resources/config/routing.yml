@@ -10,3 +10,6 @@ posts_comment:
 #    resource: "@PostsBundle/Resources/config/routing/subject.yml"
 #    prefix:   /
 
+#post_test:
+#    prefix:   /test
+#    resource: "@PostsBundle/Resources/config/routing/subject.yml"
