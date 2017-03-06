@@ -11,9 +11,8 @@ posts:
     prefix:   /post
 
 #todo:: так можно переделать нижний туду
-test:
+subjects:
     resource: "@PostsBundle/Resources/config/routing/subject.yml"
-    prefix:   /
 
 #todo:: удалить
 #subject:
@@ -22,6 +21,7 @@ test:
 #    requirements:
 #                    methods:  GET
 #                    post_id: \w
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

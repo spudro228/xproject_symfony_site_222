@@ -64,8 +64,6 @@ class PostController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Set Subjext
-            $post->setSubject($subject);
             // Set Author
             if (!$this->get('security.token_storage')->getToken()->isAuthenticated()) {
                 $post->setAuthor('antonymous');
@@ -75,10 +73,13 @@ class PostController extends Controller
                 $post->setAuthor($userName);
             }
 
+            // Set Subject
+            $post->setSubject($subject);
+
             // Set Image
             /** @var UploadedFile $file */
 
-            if ($post->getImage()){
+            if ($post->getImage()) {
                 $fileName = $this->get('file_uploader')->upload($post->getImage());
                 $post->setImage($fileName);
             }
@@ -122,7 +123,9 @@ class PostController extends Controller
 
     /**
      * Displays a form to edit an existing post entity.
-     *
+     * @param Request $request
+     * @param Post $post
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Post $post)
     {
@@ -145,7 +148,9 @@ class PostController extends Controller
 
     /**
      * Deletes a post entity.
-     *
+     * @param Request $request
+     * @param Post $post
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Post $post)
     {

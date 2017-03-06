@@ -10,6 +10,12 @@ namespace PostsBundle\Repository;
  */
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Все комменты поста.
+     *
+     * @param $postId
+     * @return array
+     */
     public function getCommentsForPost($postId)
     {
         $qb = $this->createQueryBuilder('c')->select('c')

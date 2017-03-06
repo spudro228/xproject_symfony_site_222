@@ -30,21 +30,6 @@ class Subject
     private $subjName;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="subj")
-     *
-     */
-    private $posts;
-
-
-    public function __construct()
-    {
-        $this->posts = new ArrayCollection();
-    }
-
-
-    /**
      * Get id
      *
      * @return int
@@ -68,28 +53,6 @@ class Subject
     public function setSubjName($subjName)
     {
         $this->subjName = $subjName;
-    }
-
-    /**
-     * Add comment
-     *
-     * @param Post $post
-     * @return $this
-     */
-    public function addPosts(Post $post)
-    {
-        $this->posts[] = $post;
-
-        return $this;
-    }
-
-    /**
-     *  Remove comment
-     * @param Comment $comment
-     */
-    public function removePosts(Post $post)
-    {
-        $this->posts->removeElement($post);
     }
 }
 

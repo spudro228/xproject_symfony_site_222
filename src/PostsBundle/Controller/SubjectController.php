@@ -16,13 +16,22 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SubjectController extends Controller
 {
+    /**
+     * path: /{subj}
+     * Все посты принадлежащие к определенной теме (subj).
+     *
+     * Выбираем из URL название темы, если она существует,
+     * ищем все посты с этой темой , подщитываем их кол-во.
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
         $repository = $this->getDoctrine()->getRepository(Post::class);
 
         $posts = $repository->findBySubj($request->get('subj'));
 
-        //todo:: неплохо было бы maxPage убрать куда нибудб, чтобы не тоскать везде
         return $this->render('PostsBundle:post:index.html.twig',
             [
                 'posts' => $posts,
@@ -30,6 +39,12 @@ class SubjectController extends Controller
             ]);
     }
 
+    /**
+     * Составлюем список всех тема, которые существуют.
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function getSubjectsAction(Request $request)
     {
         $subjects = $this->getDoctrine()->getRepository(Subject::class)->findAll();

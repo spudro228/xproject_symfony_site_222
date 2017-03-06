@@ -27,6 +27,12 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($query, $fetchJoinCollection = false);
     }
 
+    /**
+     * @param string $subject
+     * @param int $currentPage
+     * @param int $limit
+     * @return Paginator
+     */
     public function findBySubj($subject = "subj", $currentPage = 1, $limit = 10)
     {
         $query = $this->createQueryBuilder('post')
@@ -43,6 +49,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
 
     /**
+     * Количество всех постов.
      * @return mixed
      */
     public function getTotal()
@@ -55,6 +62,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * Количество постов определенной тематики.
      * @param $subject
      * @return mixed
      */

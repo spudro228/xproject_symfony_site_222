@@ -34,6 +34,7 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //Set Author
             /**
              *  Если не залогинены, то постим от лица анона.
              */
@@ -45,20 +46,18 @@ class CommentController extends Controller
                 $comment->setAuthor($userName);
             }
 
-            try {
+            //Set Image
+            if ($comment->getImage()) {
                 $fileName = $this->get('file_uploader')->upload($comment->getImage());
                 $comment->setImage($fileName);
-            } catch (\ErrorException $error) {
-                /* тобы не писать null обработчик в upload */
             }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
-            $em->flush($comment);
+            $em->flush();
             return $this->redirectToRoute('post_show', [
                 'id' => $comment->getPost()->getId()
             ]);
-            //return $this->get
         }
 
         return $this->render('PostsBundle:comment:new.html.twig', array(
@@ -70,6 +69,8 @@ class CommentController extends Controller
     /**
      * Finds and displays a comment entity.
      *
+     * @param Comment $comment
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Comment $comment)
     {
@@ -85,6 +86,9 @@ class CommentController extends Controller
     /**
      * Displays a form to edit an existing comment entity.
      *
+     * @param Request $request
+     * @param Comment $comment
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Comment $comment)
     {
@@ -107,6 +111,7 @@ class CommentController extends Controller
 
     /**
      * Deletes a comment entity.
+     *
      * @param Request $request
      * @param Comment $comment
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -142,7 +147,7 @@ class CommentController extends Controller
 
 
     /**
-     * Get post by Id.
+     * Get posts by Id.
      *
      * @param int $post_id
      * @return null|object|Post
