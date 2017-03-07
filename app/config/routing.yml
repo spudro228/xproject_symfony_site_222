@@ -10,17 +10,14 @@ posts:
     resource: "@PostsBundle/Resources/config/routing.yml"
     prefix:   /post
 
+test:
+    defaults: {_controller: "AppBundle:Default:test"}
+    path: /test
+
+
 #todo:: так можно переделать нижний туду
 subjects:
     resource: "@PostsBundle/Resources/config/routing/subject.yml"
-
-#todo:: удалить
-#subject:
-#    path: /{subj}
-#    defaults: { _controller: PostsBundle:Subject:index }
-#    requirements:
-#                    methods:  GET
-#                    post_id: \w
 
 app:
     resource: "@AppBundle/Controller/"

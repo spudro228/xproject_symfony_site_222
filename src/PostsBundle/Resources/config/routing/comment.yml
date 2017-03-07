@@ -1,7 +1,7 @@
-comment_index:
-    path:     /
-    defaults: { _controller: "PostsBundle:Comment:index" }
-    methods:  GET
+#comment_index:
+#    path:     /
+#    defaults: { _controller: "PostsBundle:Comment:index" }
+#    methods:  GET
 
 comment_show:
     path:     /{id}/show
