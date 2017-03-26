@@ -1,6 +1,8 @@
 {% block body %}
     <h2>Subjects</h2>
-    {% for subj in subjects %}
-        <h3><a href="{{ path('subject', { 'subj': subj.subjName}) }}">{{ subj.subjName }}</a></h3>
-    {% endfor %}
+    {% if subjects is not null %}
+        {% for subj in subjects %}
+            <h3><a href="{{ path('subject', { 'subj': subj.subjName}) }}">{{ subj.subjName }}</a></h3>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

@@ -28,6 +28,7 @@ class PostController extends Controller
     public function indexAction($currentPage = 1)
     {
         $postsRepository = $this->getDoctrine()->getRepository(Post::class);
+        $subjRepository = $this->getDoctrine()->getRepository(Subject::class);
 
         $limit = 5;
         $posts = $postsRepository->findAllByPage($currentPage, $limit);
@@ -35,12 +36,11 @@ class PostController extends Controller
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         //todo:: cleaned of excess
+        //'count' => $postsRepository->getTotal(),
         return $this->render('PostsBundle:post:index.html.twig', [
             'posts' => $posts,
-            'form' => $form->createView(),
-            'currentPage' => $currentPage,
-            'count' => $postsRepository->getTotal(),
-            'maxPages' => $postsRepository->getTotal()
+            'maxPages' => $postsRepository->getTotal(),
+            'subj' => $subjRepository->findOneBy(['id' => 1])->getSubjName()
         ]);
     }
 
@@ -148,6 +148,7 @@ class PostController extends Controller
 
     /**
      * Deletes a post entity.
+     *
      * @param Request $request
      * @param Post $post
      * @return \Symfony\Component\HttpFoundation\RedirectResponse

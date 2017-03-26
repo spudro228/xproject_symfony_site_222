@@ -10,9 +10,12 @@ namespace PostsBundle\Controller;
 
 
 use PostsBundle\Entity\Post;
-use Proxies\__CG__\PostsBundle\Entity\Subject;
+use PostsBundle\Entity\Subject;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SubjectController extends Controller
 {
@@ -28,15 +31,40 @@ class SubjectController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(Post::class);
+        $subjRepository = $this->getDoctrine()->getRepository(Subject::class);
+        $postRepository = $this->getDoctrine()->getRepository(Post::class);
 
-        $posts = $repository->findBySubj($request->get('subj'));
 
-        return $this->render('PostsBundle:post:index.html.twig',
-            [
-                'posts' => $posts,
-                'maxPages' => $repository->getTotalBySubj($request->get('subj'))
-            ]);
+        /*  Проверяем есть ли данная тема */
+        $subj = $subjRepository->findOneBy(["subjName" => $request->get('subj')])->getSubjName();
+
+        if (!$subj) {
+            return new Response('<h1>Subject not exist.</h1>', 404);
+        }
+
+        /**
+         * Проверяем есть ли посты в ней
+         *
+         * Всегда нужно возвращать имя темы,
+         * чтобы работала форма создания постов
+         */
+
+        $posts = $postRepository->findBySubj($subj);
+
+        if (!$posts) {
+            return $this->render('PostsBundle:post:index.html.twig',
+                [
+                    'subj' => $subj
+                ]);
+
+        } else {
+            return $this->render('PostsBundle:post:index.html.twig',
+                [
+                    'posts' => $posts,
+                    'maxPages' => $postRepository->getTotalBySubj($subj),
+                    'subj' => $subj
+                ]);
+        }
     }
 
     /**
@@ -45,7 +73,8 @@ class SubjectController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getSubjectsAction(Request $request)
+    public
+    function getSubjectsAction(Request $request)
     {
         $subjects = $this->getDoctrine()->getRepository(Subject::class)->findAll();
 
