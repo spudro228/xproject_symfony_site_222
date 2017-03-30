@@ -32,8 +32,9 @@
     <!-- MAIN -->
     <target name="main" depends="prepare">
         <echo>Target: main.</echo>
-        <composer command="install" composer="composer">
-        </composer>
+        <!--<composer command="install" composer="composer">-->
+        <!--</composer>-->
+        <exec command="composer install" dir="${dir.build}" />
     </target>
     <target name="composer.autoload" description="Update autoloader...">
         <composer composer="composer" command="dump-autoload">
