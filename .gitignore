@@ -14,10 +14,6 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-/v3.0.18)
-/v1.30.0)
-/v2.5.6)
-/v2.4.2)
 /composer.phar
 /LICENSE
 /phpunit.xml.dist
@@ -27,3 +23,5 @@
 /php
 /.idea/
 /web/uploads/
+/logs/
+/docs/
