@@ -1,3 +1,7 @@
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
 #file_upload:
     #resource: "@FileUploadBundle/Resources/config/routing.yml"
     #prefix:   /
@@ -14,17 +18,13 @@ test:
     defaults: {_controller: "AppBundle:Default:test"}
     path: /test
 
-
-#todo:: так можно переделать нижний туду
-subjects:
-    resource: "@PostsBundle/Resources/config/routing/subject.yml"
-
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
 
 
 

@@ -11,6 +11,7 @@ namespace PostsBundle\Controller;
 
 use PostsBundle\Entity\Post;
 use PostsBundle\Entity\Subject;
+use PostsBundle\Repository\SubjectsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,11 +43,17 @@ class SubjectController extends Controller
         $postRepository = $this->getDoctrine()->getRepository(Post::class);
 
 
-        /*  Проверяем есть ли данная тема */
-        $subj = $subjRepository->findOneBy(["subjName" => $request->get('subj')])->getSubjName();
+        /**
+         * Проверяем есть ли данная тема,
+         * если нет, то возвращам 404.
+         * @var Subject $subj - entity
+         *
+         */
+        $subj = $subjRepository->findOneBy(["subjName" => $request->get('subj')]);
+        $subjName = $subj ? $subj->getSubjName(): null;
 
-        if (!$subj) {
-            return new Response('<h1>Subject not exist.</h1>', 404);
+        if (!$subjName) {
+            return new Response("Не найдено!". 404);
         }
 
         /**
@@ -56,20 +63,20 @@ class SubjectController extends Controller
          * чтобы работала форма создания постов.
          */
 
-        $posts = $postRepository->findBySubj($subj);
+        $posts = $postRepository->findBySubj($subjName);
 
         if (!$posts) {
             return $this->render('PostsBundle:post:index.html.twig',
                 [
-                    'subj' => $subj
+                    'subj' => $subjName
                 ]);
 
         } else {
             return $this->render('PostsBundle:post:index.html.twig',
                 [
                     'posts' => $posts,
-                    'maxPages' => $postRepository->getTotalBySubj($subj),
-                    'subj' => $subj
+                    'maxPages' => $postRepository->getTotalBySubj($subjName),
+                    'subj' => $subjName
                 ]);
         }
     }

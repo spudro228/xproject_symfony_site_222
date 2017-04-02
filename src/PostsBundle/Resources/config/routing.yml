@@ -6,10 +6,7 @@ posts_comment:
     resource: "@PostsBundle/Resources/config/routing/comment.yml"
     prefix:   /comment
 
-#posts_subject:
-#    resource: "@PostsBundle/Resources/config/routing/subject.yml"
-#    prefix:   /
 
-#test:
-#    requirements: {_controller: "AppBundle:Default:test"}
-#    path:   /t
+subject:
+    path: /{subj}
+    defaults: { _controller: "PostsBundle:Subject:index"}
