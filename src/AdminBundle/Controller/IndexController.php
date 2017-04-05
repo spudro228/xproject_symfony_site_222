@@ -4,6 +4,7 @@ namespace AdminBundle\Controller;
 
 use PostsBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends Controller
@@ -14,7 +15,7 @@ class IndexController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $posts = null; //$this->getDoctrine()->getRepository(Post::class)->findAllByPage();
+        $posts = $this->getDoctrine()->getRepository(Post::class)->findAllByPage(1, 5);
         return $this->render('AdminBundle:Default:index.html.twig',
             ['posts' => $posts]);
     }

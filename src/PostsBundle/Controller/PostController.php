@@ -25,13 +25,13 @@ class PostController extends Controller
      * @param $currentPage
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction($currentPage = 1)
+    public function indexAction($currentPage = 1 )
     {
         $postsRepository = $this->getDoctrine()->getRepository(Post::class);
         $subjRepository = $this->getDoctrine()->getRepository(Subject::class);
 
         $limit = 5;
-        $posts = $postsRepository->findAllByPage($currentPage, $limit);
+        $posts = $postsRepository->findAllByPage($currentPage, $limit); //$currentPage = sharing todo неправильно работает валидация
 
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);

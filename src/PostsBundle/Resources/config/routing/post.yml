@@ -1,6 +1,6 @@
 post_index:
     path:     /{currentPage}
-    defaults: { _controller: "PostsBundle:Post:index" , currentPage:1}
+    defaults: { _controller: "PostsBundle:Post:index",currentPage:1}
     requirements:
                 methods:  GET
                 post_id: \d+

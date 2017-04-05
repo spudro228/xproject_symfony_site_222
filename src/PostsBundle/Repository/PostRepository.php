@@ -30,7 +30,7 @@ class PostRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('post')
             ->select('post')
-            ->setFirstResult($limit * ($currentPage - 1))
+            ->setFirstResult(($limit * ($currentPage - 1)))
             ->setMaxResults($limit)
             ->orderBy('post.id', 'DESC')
             ->getQuery();

@@ -53,7 +53,9 @@ class SubjectController extends Controller
         $subjName = $subj ? $subj->getSubjName(): null;
 
         if (!$subjName) {
-            return new Response("Не найдено!". 404);
+            //return new Response("Не найдено!". 404);
+            return new Response("<h1>{$request->get('subj')}</h1>", 404);
+
         }
 
         /**

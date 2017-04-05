@@ -38,8 +38,7 @@
         <echo>Target: main.</echo>
         <!--<composer command="install" composer="composer">-->
         <!--</composer>-->
-        <exec command="composer install" dir="${dir.build}" />
-    </target>
+        <exec command="composer install" dir="${dir.build}" />    </target>
     <target name="composer.autoload" description="Update autoloader...">
         <composer composer="composer" command="dump-autoload">
             <arg value="--no-dev"/>

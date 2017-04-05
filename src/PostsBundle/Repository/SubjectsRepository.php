@@ -1,6 +1,7 @@
 <?php
 
 namespace PostsBundle\Repository;
+
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
@@ -12,50 +13,38 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class SubjectsRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Возвращает посты определеного обсуждения.
+     *
+     * @param string $subj
+     * @param int $currentPage
+     * @param int $limit
+     * @return Paginator
+     */
     public function findBySubj($subj = "subj", $currentPage = 1, $limit = 10)
     {
 
-        /*дописать номальный запрос через join
-            для этого потренироваться на кошках
-        */
-
-            $query = $this->createQueryBuilder('post')
-                ->select('p')
-                ->from('PostsBundle:Post', 'p')
-                ->setFirstResult($limit * ($currentPage - 1))
-                ->setMaxResults($limit)
-                ->orderBy('p.id','DESC')
-                ->getQuery();
-
-            return new Paginator($query, $fetchJoinCollection = false);
-    }
-
-        public function getTotal()
-    {
-        return $this->createQueryBuilder('post')->select('COUNT(post)')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
-    /*
-     * public function findAllByPage($currentPage = 1, $limit = 10)
-    {
         $query = $this->createQueryBuilder('post')
-            ->select('post')
+            ->select('p')
+            ->from('PostsBundle:Post', 'p')
             ->setFirstResult($limit * ($currentPage - 1))
             ->setMaxResults($limit)
-            ->orderBy('post.id','DESC')
+            ->orderBy('p.id', 'DESC')
             ->getQuery();
 
         return new Paginator($query, $fetchJoinCollection = false);
     }
 
+    /**
+     * Возвращает количество постов.
+     * @return int
+     */
     public function getTotal()
     {
         return $this->createQueryBuilder('post')->select('COUNT(post)')
             ->getQuery()
             ->getSingleScalarResult();
+    }
 
 
-    }*/
 }
