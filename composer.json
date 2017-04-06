@@ -29,7 +29,8 @@
     "sensio/framework-extra-bundle": "^3.0.2",
     "incenteev/composer-parameter-handler": "^2.0",
     "friendsofsymfony/user-bundle": "~2.0@dev",
-    "phing/phing": "2.16.0"
+    "phing/phing": "2.16.0",
+    "symfony-bundles/json-request-bundle": "1.x-dev"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",

@@ -3,7 +3,7 @@ post_index:
     defaults: { _controller: "PostsBundle:Post:index",currentPage:1}
     requirements:
                 methods:  GET
-                post_id: \d+
+                currentPage: \d+
 
 post_show:
     path:     /{id}/show
@@ -15,7 +15,7 @@ post_new:
     defaults: { _controller: "PostsBundle:Post:new" }
     requirements:
                 methods:  POST
-                post_id: \w+
+                subj: \w+
     #вот тута добавить дефолтный 0 для subj
 
 post_edit:

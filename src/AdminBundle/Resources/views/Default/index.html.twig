@@ -1,9 +1,83 @@
 {# todo cд6елать для админки другое оформление #}
 {% extends "::base.html.twig" %}
-{%  block body %}
+{% block body %}
     <h1>Admin panel.</h1>
-
     <h2>All posts</h2>
 
+    <div id="app">
+        <div v-for="post in posts">
+            <div>{{ "{{ post.id }}" }}</div>
+            <div>{{ "{{ post.title }}" }}</div>
+            <div>{{ "{{ post.text }}" }}</div>
+            <div>{{ "{{ post.author }}" }}</div>
+            <div>{{ "{{ post.createAt.date }}" }}</div>
+            <hr>
+        </div>
+        <button v-on:click="getBack">Обратно.</button>
+        <button v-on:click="getNext({{ maxPages }})"> Туда.</button>
+        <p>The button above has been clicked {{ "{{ currentPage }}" }}times.</p>
 
+    </div>
+    {# PAGINATION #}
+    {# Render each page number #}
+    {% for i in 1..(maxPages/5)| round(0, 'ceil') %}
+        <span>
+            {#<a href="{{ path('admin_test_json', {currentPage: i}) }}">{{ i }}</a>#}
+        </span>
+    {% endfor %}
+{% endblock %}
+
+{% block   javascripts %}
+    <script type="text/javascript">
+        var apiURL = "http://127.0.0.1:8000{{ path('admin_test_json') }}";
+        function countPage() {
+            app.currentPage += 1;
+        }
+        function substractionPage() {
+            app.currentPage > 0 ? app.currentPage -= 1 : 1;
+        }
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                posts: null,
+                currentPage: 1
+            },
+            methods: {
+                getJSONtest: function (currentPage) {
+                    $.getJSON("http://127.0.0.1:8000/admin/test/" + currentPage,
+                        function (json) {
+                            app.posts = json;
+                        });
+                },
+                getNext: function (max) {
+                    if (this.currentPage < max) {
+                        this.currentPage += 1;
+                        this.getJSONtest(this.currentPage);
+                    }
+
+                },
+                getBack: function () {
+                    //this.currentPage -= 1;
+                    if (this.currentPage > 1) {
+                        this.currentPage -= 1;
+                        this.getJSONtest(this.currentPage);
+                    } else {
+                        return 0;
+                    }
+                }
+            },
+            created: function () {
+                this.getJSONtest(1);
+            }
+
+        });
+
+
+        /*$.getJSON("http://127.0.0.1:8000",
+         function (json) {
+         app.json = json;
+         });*/
+        {#{{ path('admin_test_json') }}#}
+    </script>
 {% endblock %}

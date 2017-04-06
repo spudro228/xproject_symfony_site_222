@@ -1,3 +1,10 @@
 admin_homepage:
     path:     /
     defaults: { _controller: AdminBundle:Index:index}
+admin_test_json:
+    path: /test/{currentPage}
+    defaults: { _controller: AdminBundle:Index:getJsonTest, currentPage:1}
+    requirements:
+        methods: GET
+        currentPage: \d+
+

@@ -25,7 +25,7 @@ class PostController extends Controller
      * @param $currentPage
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction($currentPage = 1 )
+    public function indexAction($currentPage)
     {
         $postsRepository = $this->getDoctrine()->getRepository(Post::class);
         $subjRepository = $this->getDoctrine()->getRepository(Subject::class);
