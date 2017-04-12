@@ -124,10 +124,10 @@ class CommentController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($comment);
-            $em->flush($comment);
+            $em->flush();
         }
 
-        return $this->redirectToRoute('comment_index');
+        return $this->redirectToRoute('homepage');
     }
 
     /**

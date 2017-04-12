@@ -5,18 +5,22 @@
     <h2>All posts</h2>
 
     <div id="app">
+        <button v-on:click="getBack">Обратно.</button>
+        <button @click="update">Обновить.</button>
+        <button v-on:click="getNext({{ maxPages }})"> Туда.</button>
+        <p>
+        <h2>Page: {{ "{{ currentPage }}" }}.</h2></p>
+        <hr>
         <div v-for="post in posts">
-            <div>{{ "{{ post.id }}" }}</div>
+            <div>{{ '{{ post.id }}' }}</div>
             <div>{{ "{{ post.title }}" }}</div>
             <div>{{ "{{ post.text }}" }}</div>
             <div>{{ "{{ post.author }}" }}</div>
             <div>{{ "{{ post.createAt.date }}" }}</div>
+            <button v-on:click="deletePost(post.id)">Delete.</button>
+            <a href="{{ path('post_delete', {'id': '9'}) }}">Delll</a>
             <hr>
         </div>
-        <button v-on:click="getBack">Обратно.</button>
-        <button v-on:click="getNext({{ maxPages }})"> Туда.</button>
-        <p>The button above has been clicked {{ "{{ currentPage }}" }}times.</p>
-
     </div>
     {# PAGINATION #}
     {# Render each page number #}
@@ -29,7 +33,7 @@
 
 {% block   javascripts %}
     <script type="text/javascript">
-        var apiURL = "http://127.0.0.1:8000{{ path('admin_test_json') }}";
+        var apiURL = "http://127.0.0.1:8000{{ path('admin_get_json') }}";
         function countPage() {
             app.currentPage += 1;
         }
@@ -40,12 +44,14 @@
         var app = new Vue({
             el: '#app',
             data: {
+                /*@type json*/
                 posts: null,
+                /*@type int */
                 currentPage: 1
             },
             methods: {
-                getJSONtest: function (currentPage) {
-                    $.getJSON("http://127.0.0.1:8000/admin/test/" + currentPage,
+                getJSONtest: function () {
+                    $.getJSON("http://127.0.0.1:8000/admin/posts/" + this.currentPage,
                         function (json) {
                             app.posts = json;
                         });
@@ -65,14 +71,31 @@
                     } else {
                         return 0;
                     }
+                },
+                update: function () {
+                    this.getJSONtest(this.currentPage);
+                },
+                deletePost: function ($post_id) {
+                    //window.alert('post/' + $post_id + '/delete');
+                    $.ajax({
+                        url: 'http://127.0.0.1:8000/post/' + $post_id + '/delete',
+                        method: 'DELETE',
+                        contentType: 'application/json',
+                        success: function (result) {
+                            window.alert(this.success())
+                        },
+                        error: function (request, msg, error) {
+                            window.alert('Bad alert.')
+                        }
+                    });
                 }
             },
             created: function () {
-                this.getJSONtest(1);
+                this.getJSONtest();
             }
 
-        });
 
+        });
 
         /*$.getJSON("http://127.0.0.1:8000",
          function (json) {

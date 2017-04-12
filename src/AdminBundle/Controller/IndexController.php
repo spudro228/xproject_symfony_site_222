@@ -2,6 +2,7 @@
 
 namespace AdminBundle\Controller;
 
+use AdminBundle\AdminBundle;
 use PostsBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -18,21 +19,30 @@ class IndexController extends Controller
     {
         $limit = 5;
         $posts = $this->getDoctrine()->getRepository(Post::class)->findAllByPage(1, $limit);
-        $postsCount = ceil($posts->count()/$limit);
-        return $this->render('AdminBundle:Default:index.html.twig',
+        $postsCount = ceil($posts->count() / $limit);
+        $form = $this->createFormBuilder()
+            ->setAction($this->generateUrl('post_delete', ['id' => 9]))
+            ->setMethod('DELETE')
+            ->getForm();
+        return $this->render(
+            'AdminBundle:Default:index.html.twig',
             ['posts' => $posts,
-            'maxPages'=>$postsCount]);
+                'maxPages' => $postsCount,
+                'form' => $form->createView()]);
     }
 
-    /**
-     *  Testing Json.
-     * @param int $currentPage
-     * @return JsonResponse
-     */
-    public function getJsonTestAction(int $currentPage)
+
+    public function getAllPostsAction(int $currentPage)
     {
         $posts = $this->getDoctrine()->getRepository(Post::class)->findAllByPage($currentPage, 5);
-        return new JsonResponse($posts->getQuery()->getArrayResult());
+        $posts = $posts->getQuery()->getArrayResult();
+        return new JsonResponse($posts);
+
+        /*return $this->render('AdminBundle:Default:index.html.twig',
+            ['post' => $posts->getQuery(),
+                'maxPages' => 228,
+                'hui' => "HUI"], new JsonResponse());*/
+
 
     }
 }

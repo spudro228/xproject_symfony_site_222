@@ -82,16 +82,15 @@ class Post
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post",  cascade={"persist"})
      */
     private $comments;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Subject", inversedBy="posts")
+     *
      * @ORM\JoinColumn(name="subj_id", referencedColumnName="id")
      */
     private $subject;
-
 
 
     /**
