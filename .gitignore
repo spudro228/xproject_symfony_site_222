@@ -25,3 +25,4 @@
 /web/uploads/
 /logs/
 /docs/
+/src/AdminBundle/Resources/views/vue.js
