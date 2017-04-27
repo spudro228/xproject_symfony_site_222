@@ -69,6 +69,7 @@ class Post
      * @var string
      *
      * @ORM\Column(type="text", length=100, nullable=true)
+     *
      */
     private $author;
 
@@ -82,13 +83,14 @@ class Post
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post",  cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post",  cascade={"persist","remove"})
      */
     private $comments;
 
     /**
-     *
-     * @ORM\JoinColumn(name="subj_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Subject")
+     * @ORM\JoinColumn(name="subj_id", referencedColumnName="id",nullable=false)
+     * cascade={"persist", "remove", "merge"}, orphanRemoval=true,
      */
     private $subject;
 

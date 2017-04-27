@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends Controller
 {
@@ -44,5 +45,24 @@ class IndexController extends Controller
                 'hui' => "HUI"], new JsonResponse());*/
 
 
+    }
+
+    public function testAction()
+    {
+        $posts = $this->getDoctrine()->getRepository(Post::class)->findAllByPage(1, 5);
+        $posts = $posts->getQuery()->getArrayResult();
+        $post = new Post();
+        $deleteForm = $form = $this->createFormBuilder()
+            ->setAction($this->generateUrl('post_delete', ['id' => 9]))
+            ->setMethod('DELETE')
+            ->getForm();
+        //->setAction($this->generateUrl('post_delete', ['id' => $post->getId()]))
+        $render = $this->render('AdminBundle:test:test.html.twig', ['form' => $deleteForm->createView()]);
+        //var_dump($render);
+        $js = new JsonResponse(
+            ['data' => $this->get('templating')->render('AdminBundle:test:test.html.twig',
+                ['form' => $deleteForm->createView()])]);
+        //$js->setContent($render);
+        return $js;
     }
 }

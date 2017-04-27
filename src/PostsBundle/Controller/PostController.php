@@ -34,6 +34,7 @@ class PostController extends Controller
         $posts = $postsRepository->findAllByPage($currentPage, $limit); //$currentPage = sharing todo неправильно работает валидация
 
         $post = new Post();
+        \Doctrine\Common\Util\Debug::dump($posts->getQuery()->getArrayResult());
         $form = $this->createForm(PostType::class, $post);
         //todo:: cleaned of excess
         //'count' => $postsRepository->getTotal(),
@@ -161,7 +162,7 @@ class PostController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($post);
-            $em->flush($post);
+            $em->flush();
         }
 
         return $this->redirectToRoute('post_index');

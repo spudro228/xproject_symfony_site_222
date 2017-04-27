@@ -26,6 +26,7 @@ class Subject
      * @var string
      *
      * @ORM\Column(type="string")
+     *
      */
     private $subjName;
 

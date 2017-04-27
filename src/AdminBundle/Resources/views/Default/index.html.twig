@@ -11,6 +11,9 @@
         <p>
         <h2>Page: {{ "{{ currentPage }}" }}.</h2></p>
         <hr>
+        <h3>Тестовый стенд.</h3>
+        <div  v-html="test.data"></div>
+        <hr>
         <div v-for="post in posts">
             <div>{{ '{{ post.id }}' }}</div>
             <div>{{ "{{ post.title }}" }}</div>
@@ -46,15 +49,21 @@
             data: {
                 /*@type json*/
                 posts: null,
+                test: null,
                 /*@type int */
                 currentPage: 1
             },
             methods: {
-                getJSONtest: function () {
+                getJSONText: function () {
                     $.getJSON("http://127.0.0.1:8000/admin/posts/" + this.currentPage,
                         function (json) {
                             app.posts = json;
                         });
+                },
+                getTest: function () {
+                    $.getJSON("http://127.0.0.1:8000/admin/test", function (json) {
+                        app.test = json;
+                    });
                 },
                 getNext: function (max) {
                     if (this.currentPage < max) {
@@ -91,7 +100,8 @@
                 }
             },
             created: function () {
-                this.getJSONtest();
+                this.getJSONText();
+                this.getTest();
             }
 
 

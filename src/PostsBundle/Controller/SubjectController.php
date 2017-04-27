@@ -66,6 +66,7 @@ class SubjectController extends Controller
          */
 
         $posts = $postRepository->findBySubj($subjName);
+        \Doctrine\Common\Util\Debug::dump($posts->getQuery()->getArrayResult());
 
         if (!$posts) {
             return $this->render('PostsBundle:post:index.html.twig',
