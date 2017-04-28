@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends Controller
 {
+    const LIMIT = 5;
+    const CURRENT_PAGE = 1;
+
     /** Возвращает список всех постов.
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -19,7 +22,7 @@ class IndexController extends Controller
     public function indexAction(Request $request)
     {
         $limit = 5;
-        $posts = $this->getDoctrine()->getRepository(Post::class)->findAllByPage(1, $limit);
+        $posts = $this->getDoctrine()->getRepository(Post::class)->findAllByPage(1, self::LIMIT);
         $postsCount = ceil($posts->count() / $limit);
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('post_delete', ['id' => 9]))
@@ -60,9 +63,26 @@ class IndexController extends Controller
         $render = $this->render('AdminBundle:test:test.html.twig', ['form' => $deleteForm->createView()]);
         //var_dump($render);
         $js = new JsonResponse(
-            ['data' => $this->get('templating')->render('AdminBundle:test:test.html.twig',
+            ['dataJ' => $this->get('templating')->render('AdminBundle:test:test.html.twig',
                 ['form' => $deleteForm->createView()])]);
         //$js->setContent($render);
-        return $js;
+        return new JsonResponse(['dataJ' => $this->createDeleteFormJSON()]);
+    }
+
+    protected function createDeleteFormJSON($currentPage = self::CURRENT_PAGE, $limit = self::LIMIT)
+    {
+        $firstDeleteNumber = $limit * ($currentPage - 1);
+        $deleteForms = [];
+        for ($i = 1; $i < $firstDeleteNumber; $i++) {
+            $deleteForms[] = $this->get('templating')->
+            render('AdminBundle:test:test.html.twig',
+                ['form' => $this->createFormBuilder()
+                    ->setAction($this->generateUrl('post_delete', ['id' => $i]))
+                    ->setMethod('DELETE')
+                    ->getForm()->createView()]);
+
+        }
+
+        return $deleteForms;
     }
 }
