@@ -12,7 +12,9 @@
         <h2>Page: {{ "{{ currentPage }}" }}.</h2></p>
         <hr>
         <h3>Тестовый стенд.</h3>
-        <div  v-html="test.dataJ"></div>
+        <div v-for="form in test.forms">
+            <div v-html="form"></div>
+        </div>
         <hr>
         <div v-for="post in posts">
             <div>{{ '{{ post.id }}' }}</div>

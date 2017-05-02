@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends Controller
 {
+    use \BuildFormsJSON;
+
     const LIMIT = 5;
     const CURRENT_PAGE = 1;
 
@@ -52,37 +54,10 @@ class IndexController extends Controller
 
     public function testAction()
     {
-        $posts = $this->getDoctrine()->getRepository(Post::class)->findAllByPage(1, 5);
-        $posts = $posts->getQuery()->getArrayResult();
-        $post = new Post();
-        $deleteForm = $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('post_delete', ['id' => 9]))
-            ->setMethod('DELETE')
-            ->getForm();
-        //->setAction($this->generateUrl('post_delete', ['id' => $post->getId()]))
-        $render = $this->render('AdminBundle:test:test.html.twig', ['form' => $deleteForm->createView()]);
-        //var_dump($render);
-        $js = new JsonResponse(
-            ['dataJ' => $this->get('templating')->render('AdminBundle:test:test.html.twig',
-                ['form' => $deleteForm->createView()])]);
-        //$js->setContent($render);
-        return new JsonResponse(['dataJ' => $this->createDeleteFormJSON()]);
+
+        return new JsonResponse(['forms' => $this->createDeleteFormJSON('AdminBundle:test:test.html.twig', 'post_delete')]);
     }
 
-    protected function createDeleteFormJSON($currentPage = self::CURRENT_PAGE, $limit = self::LIMIT)
-    {
-        $firstDeleteNumber = $limit * ($currentPage - 1);
-        $deleteForms = [];
-        for ($i = 1; $i < $firstDeleteNumber; $i++) {
-            $deleteForms[] = $this->get('templating')->
-            render('AdminBundle:test:test.html.twig',
-                ['form' => $this->createFormBuilder()
-                    ->setAction($this->generateUrl('post_delete', ['id' => $i]))
-                    ->setMethod('DELETE')
-                    ->getForm()->createView()]);
 
-        }
-
-        return $deleteForms;
-    }
 }
+
