@@ -10,10 +10,8 @@ namespace PostsBundle\DataFixtures\ORM;
 
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\Query\AST\Functions\AbsFunction;
 use PostsBundle\Entity\Comment;
 
 class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
@@ -25,8 +23,12 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $comment = new Comment();
-        $comment->setTitle("A.u.e");
-        $comment->setText("Fartu masti, vorovskogo hodu!");
+        $comment->setTitle("Сем виды Кедр пал речи ");
+        $comment->setText("ак Мощь луга дуб льва. Чья Вот Сей еще. 
+        Определил вздрогнет Вселенной двигнутся уподобить. . 
+        Жива По стад стук ль Ко Во Не Се но. Муж Отч пал мню сам имя Злы. 
+        Шум зрю привесть дни предложу искренню Жив Дум. Ад От та Ее Со во те. 
+        Тя Уж зрим из уж ли Всяк Не Но трех. Ум яйцом Прочь верой живую славу Тя ИЗ яр ты. ");
         $comment->setPost($manager->merge($this->getReference('post-0')));
         $manager->persist($comment);
 
@@ -37,8 +39,8 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($comment1);
 
         $comment2 = new Comment();
-        $comment2->setTitle("Jizn voram");
-        $comment2->setText("Fartu masti, vorovskogo hodu!");
+        $comment2->setTitle("Нoooooo");
+        $comment2->setText("Abra kadabra syaski masyaski");
         $comment2->setPost($manager->merge($this->getReference('post-0')));
         $manager->persist($comment2);
 
@@ -58,6 +60,6 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 }
