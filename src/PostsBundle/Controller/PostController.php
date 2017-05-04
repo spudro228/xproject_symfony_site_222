@@ -168,6 +168,7 @@ class PostController extends Controller
         return $this->redirectToRoute('post_index');
     }
 
+
     /**
      * Creates a form to delete a post entity.
      *
@@ -182,6 +183,7 @@ class PostController extends Controller
             ->setMethod('DELETE')
             ->getForm();
     }
+
 
     /**
      *  Get Subject obj by subj name.

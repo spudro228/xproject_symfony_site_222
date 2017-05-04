@@ -10,3 +10,6 @@ services:
       file_uploader:
           class: FileUploadBundle\Service\FileUploader
           arguments: ["%files_directory%"]
+
+imports:
+    - { resource: "@PostsBundle/Resources/config/services.yml" }

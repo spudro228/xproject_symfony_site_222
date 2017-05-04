@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+    <br>
+    {% for post in posts %}
+        {% set inc = 0 %}
+
+
+
+        {{ post.id }}
+        {{ post.title }}
+        {#{{ render(controller('PostsBundle:Post:delete',{'post': post  })) }}#}
+
+        {{ form_start(forms[inc]) }}
+        <input type="submit" value="Delete">
+        {{ form_end(forms[inc]) }}
+
+        <br>
+    {% endfor %}
+{% endblock %}
