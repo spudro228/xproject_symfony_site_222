@@ -2,8 +2,7 @@
 
 namespace PostsBundle\Controller;
 
-use FileUploadBundle\Entity\File;
-use FileUploadBundle\Form\FileType;
+
 use PostsBundle\Entity\Comment;
 use PostsBundle\Entity\Post;
 use PostsBundle\Entity\Subject;
@@ -11,7 +10,7 @@ use PostsBundle\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 
 /**
  * Post controller.
@@ -22,26 +21,22 @@ class PostController extends Controller
 
     /**
      * Lists all post entities.
-     * @param $currentPage
+     * @param int $currentPage
+     * @param int $limit
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction($currentPage)
+    public function indexAction($currentPage = 1, $limit = 5)
     {
         $postsRepository = $this->getDoctrine()->getRepository(Post::class);
         $subjRepository = $this->getDoctrine()->getRepository(Subject::class);
 
-        $limit = 5;
-        $posts = $postsRepository->findAllByPage($currentPage, $limit); //$currentPage = sharing todo неправильно работает валидация
+        $posts = $postsRepository->findAllByPage($currentPage, $limit); //$currentPage = sharing
 
-        $post = new Post();
-        \Doctrine\Common\Util\Debug::dump($posts->getQuery()->getArrayResult());
-        $form = $this->createForm(PostType::class, $post);
-        //todo:: cleaned of excess
-        //'count' => $postsRepository->getTotal(),
+
         return $this->render('PostsBundle:post:index.html.twig', [
             'posts' => $posts,
             'maxPages' => $postsRepository->getTotal(),
-            'subj' => $subjRepository->findOneBy(['id' => 1])->getSubjName()
+            'subj' => $subjRepository->findOneBy([])->getSubjName() // get first subj irrespective of id
         ]);
     }
 
@@ -53,11 +48,7 @@ class PostController extends Controller
      */
     public function newAction(Request $request, $subj)
     {
-        /**
-         * 03.03.17
-         * todo:: 03.03.17 хуй его знает, провильно ли вконтроллере доставать это? или лучше в шаблоне ( как в коментариях - в шаблоне)
-         * todo:: посмотреть что будет быстрее и компактнее (исключающее)или читабельнее
-         */
+
         $subject = $this->getSubject($subj);
 
         $post = new Post();

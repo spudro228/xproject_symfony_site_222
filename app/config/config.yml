@@ -78,7 +78,6 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: UserBundle\Entity\User
-    # todo Изменить form_email!!!
     from_email:
             address:        noreply@example.com
             sender_name:    Demo App

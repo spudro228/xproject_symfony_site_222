@@ -22,7 +22,9 @@ class IndexController extends Controller
     const LIMIT = 5;
     const CURRENT_PAGE = 1;
 
-    /** Возвращает список всех постов.
+    /**
+     * Возвращает список всех постов.
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
