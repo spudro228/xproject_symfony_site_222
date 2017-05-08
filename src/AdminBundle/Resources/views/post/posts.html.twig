@@ -22,6 +22,7 @@
     {{ form_widget(forms[inc]) }}
     <input type="submit" value="Delete">
     {{ form_end(forms[inc]) }}
+    {% set inc = inc + 1  %}
 
     <hr>
 {% endfor %}
