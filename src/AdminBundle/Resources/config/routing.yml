@@ -8,9 +8,5 @@ admin_get_json:
         methods: GET
         currentPage: \d+
 
-admin_test:
-    path: /test
-    defaults: { _controller: AdminBundle:Index:test}
-    requirements:
-      methods: GET
+
 

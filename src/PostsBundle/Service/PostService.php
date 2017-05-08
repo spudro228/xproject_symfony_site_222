@@ -26,7 +26,7 @@ class PostService
 
     }
 
-    use \BuildFormsJSON;
+    //use \BuildFormsJSON;
 
     //TODO: 04.05.17 Добавить коментарии
     public function createDeleteForm(Post $post)

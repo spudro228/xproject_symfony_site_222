@@ -2,31 +2,28 @@
 
 namespace AdminBundle\Controller;
 
-use function PHPSTORM_META\map;
-use PostsBundle\Controller\PostController;
-
 use PostsBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends Controller
 {
-    //TODO: 04.05.17 Добавить коментарии и почистить код
-
-    use \BuildFormsJSON;
 
 
     const LIMIT = 5;
     const CURRENT_PAGE = 1;
 
     /**
-     * Возвращает список всех постов.
+     * Рендерит стартовую страницу.
+     *
+     * Возвращает список всех постов с формами для их удаления
+     * и количество всех постов для пагинации.
+     * можно убрать только нужно перенести подщет количество постов
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction(Request $request)
     {
@@ -35,7 +32,7 @@ class IndexController extends Controller
         $postsCount = ceil($posts->count() / $limit);
         return $this->render(
             'AdminBundle:Default:index.html.twig',
-            ['posts' => $posts,
+            [//'posts' => $posts,
                 'maxPages' => $postsCount,
             ]);
     }
@@ -45,14 +42,12 @@ class IndexController extends Controller
     {
 
         $posts = $this->getDoctrine()->getRepository(Post::class)->findAllByPage($currentPage, 5);
-        //$argv = $posts->getIterator()->current();
 
         $forms = array_map(function ($n) {
             return $this->get('posts.controller')->createDeleteForm($n);
         }, $posts->getIterator()->getArrayCopy());
 
-        //var_dump($forms);
-        $response = $this->get('templating')->render('@Admin/test/posts.html.twig',
+        $response = $this->get('templating')->render('@Admin/post/posts.html.twig',
             [
                 'posts' => $posts,
                 'forms' => $forms
@@ -63,21 +58,6 @@ class IndexController extends Controller
 
 
     }
-
-    function iterator_map($iterator, callable $callback)
-    {
-        foreach ($iterator as $current) {
-            $callback($current);
-        }
-    }
-
-    public
-    function testAction()
-    {
-
-        return new JsonResponse(['forms' => $this->createDeleteFormJSON('AdminBundle:test:test.html.twig', 'post_delete')]);
-    }
-
 
 }
 
