@@ -38,12 +38,15 @@
         <echo>Target: main.</echo>
         <!--<composer command="install" composer="composer">-->
         <!--</composer>-->
-        <exec command="composer install" dir="${dir.build}" />    </target>
+        <exec command="composer install" dir="${dir.build}" />
+    </target>
+
     <target name="composer.autoload" description="Update autoloader...">
         <composer composer="composer" command="dump-autoload">
             <arg value="--no-dev"/>
         </composer>
     </target>
+
     <target name="clear">
         <delete failonerror="true" verbose="true" includeemptydirs="true">
             <fileset dir="${dir.build}" includes="**/*"/>
@@ -54,7 +57,7 @@
     <!-- don't work -->
     <!-- Target: database.up -->
     <!-- ============================================  -->
-    <target name="database.up" description="Create database and schema.">
+<!--    <target name="database.up" description="DON'T WORK!!! Create database and schema.">
         <exec command="php" error="${dir.reports.build}/db.log" dir="${project.basedir}"
         checkreturn="true">
             <arg value="bin/console"/>
@@ -65,5 +68,5 @@
             <arg value="bin/console"/>
             <arg value="doctrine:schema:create"/>
         </exec>
-    </target>
+    </target>-->
 </project>
