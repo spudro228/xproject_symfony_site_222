@@ -33,12 +33,18 @@
         <touch file="${dir.reports.build}/db.log"/>
     </target>
 
+    <target name="test.fixture" description="Load fata fixtures for testing functionality/">
+        <echo msg="Generating testing data..."/>
+        <exec passthru="true" logoutput="true" checkreturn="true" command="yes | php bin/console doctrine:fixtures:load"
+              dir="./"/>
+    </target>
+
     <!-- MAIN -->
     <target name="main" depends="prepare">
         <echo>Target: main.</echo>
         <!--<composer command="install" composer="composer">-->
         <!--</composer>-->
-        <exec command="composer install" dir="${dir.build}" />
+        <exec command="composer install" dir="${dir.build}"/>
     </target>
 
     <target name="composer.autoload" description="Update autoloader...">
@@ -57,16 +63,21 @@
     <!-- don't work -->
     <!-- Target: database.up -->
     <!-- ============================================  -->
-<!--    <target name="database.up" description="DON'T WORK!!! Create database and schema.">
-        <exec command="php" error="${dir.reports.build}/db.log" dir="${project.basedir}"
-        checkreturn="true">
-            <arg value="bin/console"/>
-            <arg value="doctrine:database:create"/>
+    <target name="database.up" description="Create database and schema.">
+        <exec command="php bin/console doctrine:database:create"
+              passthru="true"
+              logoutput="true"
+              error="${dir.reports.build}/db.log"
+              dir="${project.basedir}"
+              checkreturn="true">
+
         </exec>
-        <exec  command="php" error="${dir.reports.build}/db.log" dir="${project.basedir}"
-        checkreturn="true">
-            <arg value="bin/console"/>
-            <arg value="doctrine:schema:create"/>
+        <exec command="php bin/console doctrine:schema:create"
+              passthru="true"
+              logoutput="true"
+              error="${dir.reports.build}/db.log"
+              dir="${project.basedir}"
+              checkreturn="true">
         </exec>
-    </target>-->
+    </target>
 </project>
