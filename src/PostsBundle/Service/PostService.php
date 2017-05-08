@@ -26,9 +26,13 @@ class PostService
 
     }
 
-    //use \BuildFormsJSON;
 
-    //TODO: 04.05.17 Добавить коментарии
+    /**
+     *  Содзает форму удаления для каждого обьекта Post.
+     *
+     * @param Post $post
+     * @return \Symfony\Component\Form\FormView
+     */
     public function createDeleteForm(Post $post)
     {
         return $this->formFactory->createBuilder()
