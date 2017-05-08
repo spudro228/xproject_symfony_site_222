@@ -2,10 +2,11 @@
 {% block body %}
     <h1>Post</h1>
 
-    <span>{{ post.id }}</span>
-    <span><s>{{ post.title }}</s></span>
-    <span>{{ post.author }}</span>
-    <span>{% if post.createAt %}{{ post.createAt|date('Y-m-d H:i:s') }}{% endif %}</span>
+    <b>Id: </b><span>{{ post.id }}</span>
+
+    <b>Title: </b><span>{{ post.title }}</span>
+    <b>Author: </b><span><s>{{ post.author }}</s></span>
+    <b>Crate at: </b><span>{% if post.createAt %}{{ post.createAt|date('Y-m-d H:i:s') }}{% endif %}</span>
     <br/>
     <p>{{ post.text }}</p>
 
@@ -20,8 +21,8 @@
 
 
 
-
-    <a href="{{ path('post_index') }}" class="pure-button pure-button-primary">Go to index</a>
+    <br>
+    <a href="{{ path('post_index') }}" class="pure-button pure-button-primary">Go to main page.</a>
 
 
 

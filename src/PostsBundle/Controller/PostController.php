@@ -156,7 +156,7 @@ class PostController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('post_index');
+        return $this->redirectToRoute('homepage');
     }
 
 

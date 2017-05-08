@@ -1,19 +1,26 @@
-{% extends '::base.html.twig' %}
-{% block body %}
+{% for post in posts %}
+    {% set inc = 0 %}
+
+
+
+    <b>Id:</b>  {{ post.id }}
     <br>
-    {% for post in posts %}
-        {% set inc = 0 %}
+    <b>Title:</b>{{ post.title }}
+    <br>
+    <b>Author:</b>{{ post.author }}
+    <br>
+    <b>Date:</b>{{ post.createAt|date('Y-m-d H:i:s') }}
+    <br>
+    <b>Text:</b>
+    <br>
+    <p>{{ post.text }}</p>
+    {#{{ render(controller('PostsBundle:Post:delete',{'post': post  })) }}#}
+    <a href="{{ path('post_show', {'id' : post.id}) }}">Show.</a>
 
+    {{ form_start(forms[inc]) }}
+    {{ form_widget(forms[inc]) }}
+    <input type="submit" value="Delete">
+    {{ form_end(forms[inc]) }}
 
-
-        {{ post.id }}
-        {{ post.title }}
-        {#{{ render(controller('PostsBundle:Post:delete',{'post': post  })) }}#}
-
-        {{ form_start(forms[inc]) }}
-        <input type="submit" value="Delete">
-        {{ form_end(forms[inc]) }}
-
-        <br>
-    {% endfor %}
-{% endblock %}
+    <hr>
+{% endfor %}

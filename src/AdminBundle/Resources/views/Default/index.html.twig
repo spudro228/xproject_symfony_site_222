@@ -5,28 +5,17 @@
     <h2>All posts</h2>
 
     <div id="app">
-        <button v-on:click="getBack">Обратно.</button>
+        <button @click="getBack">Обратно.</button>
         <button @click="update">Обновить.</button>
-        <button v-on:click="getNext({{ maxPages }})"> Туда.</button>
+        <button @click="getNext"> Туда.</button>
+
+        <button @click="getJSONText">Get</button>
         <p>
         <h2>Page: {{ "{{ currentPage }}" }}.</h2></p>
         <hr>
-        <h3>Тестовый стенд.</h3>
-        <div v-for="form in test.forms">
-            <div v-html="form"></div>
-        </div>
-        <hr>
-        <div v-for="post in posts">
-            <div>{{ '{{ post.id }}' }}</div>
-            <div>{{ "{{ post.title }}" }}</div>
-            <div>{{ "{{ post.text }}" }}</div>
-            <div>{{ "{{ post.author }}" }}</div>
-            <div>{{ "{{ post.createAt.date }}" }}</div>
-            <button v-on:click="deletePost(post.id)">Delete.</button>
-            <a href="{{ path('post_delete', {'id': '9'}) }}">Delll</a>
-            <hr>
-        </div>
+        <div v-html="posts"></div>
     </div>
+
     {# PAGINATION #}
     {# Render each page number #}
     {% for i in 1..(maxPages/5)| round(0, 'ceil') %}
@@ -37,6 +26,7 @@
 {% endblock %}
 
 {% block   javascripts %}
+
     <script type="text/javascript">
         var apiURL = "http://127.0.0.1:8000{{ path('admin_get_json') }}";
         function countPage() {
@@ -53,7 +43,8 @@
                 posts: null,
                 test: null,
                 /*@type int */
-                currentPage: 1
+                currentPage: 1,
+                maxPage: {{ maxPages }}
             },
             methods: {
                 getJSONText: function () {
@@ -67,10 +58,10 @@
                         app.test = json;
                     });
                 },
-                getNext: function (max) {
-                    if (this.currentPage < max) {
+                getNext: function () {
+                    if (this.currentPage < this.maxPage) {
                         this.currentPage += 1;
-                        this.getJSONtest(this.currentPage);
+                        this.getJSONText();
                     }
 
                 },
@@ -78,32 +69,15 @@
                     //this.currentPage -= 1;
                     if (this.currentPage > 1) {
                         this.currentPage -= 1;
-                        this.getJSONtest(this.currentPage);
-                    } else {
-                        return 0;
+                        this.getJSONText();
                     }
                 },
                 update: function () {
-                    this.getJSONtest(this.currentPage);
-                },
-                deletePost: function ($post_id) {
-                    //window.alert('post/' + $post_id + '/delete');
-                    $.ajax({
-                        url: 'http://127.0.0.1:8000/post/' + $post_id + '/delete',
-                        method: 'DELETE',
-                        contentType: 'application/json',
-                        success: function (result) {
-                            window.alert(this.success())
-                        },
-                        error: function (request, msg, error) {
-                            window.alert('Bad alert.')
-                        }
-                    });
+                    this.getJSONtest();
                 }
             },
             created: function () {
                 this.getJSONText();
-                this.getTest();
             }
 
 

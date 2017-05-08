@@ -33,15 +33,11 @@ class IndexController extends Controller
         $limit = 5;
         $posts = $this->getDoctrine()->getRepository(Post::class)->findAllByPage(1, self::LIMIT);
         $postsCount = ceil($posts->count() / $limit);
-        $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('post_delete', ['id' => 9]))
-            ->setMethod('DELETE')
-            ->getForm();
         return $this->render(
             'AdminBundle:Default:index.html.twig',
             ['posts' => $posts,
                 'maxPages' => $postsCount,
-                'form' => $form->createView()]);
+            ]);
     }
 
 
@@ -49,7 +45,7 @@ class IndexController extends Controller
     {
 
         $posts = $this->getDoctrine()->getRepository(Post::class)->findAllByPage($currentPage, 5);
-        $argv = $posts->getIterator()->current();
+        //$argv = $posts->getIterator()->current();
 
         $forms = array_map(function ($n) {
             return $this->get('posts.controller')->createDeleteForm($n);
@@ -63,7 +59,7 @@ class IndexController extends Controller
             ]);
 
 
-        return new Response($response);
+        return new JsonResponse($response);
 
 
     }

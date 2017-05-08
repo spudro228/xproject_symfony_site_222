@@ -1,5 +1,5 @@
 services:
     posts.controller:
         class: PostsBundle\Service\PostService
-        arguments: ['@form.factory', '@router', '@form.type.form']
+        arguments: ['@form.factory', '@router']
         #arguments : "@service_id", "plain_value", "%parameter%"

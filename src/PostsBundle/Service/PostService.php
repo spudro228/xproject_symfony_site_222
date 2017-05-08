@@ -31,7 +31,7 @@ class PostService
     //TODO: 04.05.17 Добавить коментарии
     public function createDeleteForm(Post $post)
     {
-        return $this->formFactory->createBuilder(FormType::class)
+        return $this->formFactory->createBuilder()
             ->setAction($this->router->generate('post_delete', array('id' => $post->getId())))
             ->setMethod('DELETE')->getForm()->createView();
     }
