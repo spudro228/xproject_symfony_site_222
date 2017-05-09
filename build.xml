@@ -44,7 +44,12 @@
         <echo>Target: main.</echo>
         <!--<composer command="install" composer="composer">-->
         <!--</composer>-->
-        <exec command="composer install" dir="${dir.build}"/>
+        <exec command="composer install --no-dev" dir="${dir.build}"
+              	passthru="true"
+              	logoutput="true"
+              	error="${dir.reports.build}/db.log"
+              	dir="${project.basedir}"
+		checkreturn="true"/>
     </target>
 
     <target name="composer.autoload" description="Update autoloader...">
