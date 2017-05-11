@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- build xml -->
 
-<project name="symfony_site" default="main">
+<project name="symfony_site">
 
 
     <!-- Properties -->
@@ -68,13 +68,13 @@
     </target>
     <target name="composer-self-update">
         <exec
-                command="${cmd.composer} self-update --working-dir ${dir.project}"
+                command="${cmd.composer} self-update --working-dir ${project.basedir}"
                 passthru="true"
         />
     </target>
     <target name="composer-optimize">
         <exec
-                command="${cmd.composer} dump-autoload --optimize --working-dir ${dir.project}"
+                command="${cmd.composer} dump-autoload --optimize --working-dir ${project.basedir}"
                 passthru="true"
         />
     </target>
@@ -84,7 +84,7 @@
         <phingcall inheritRefs="true" target="composer-self-update">
         </phingcall>
         <exec
-                command="${cmd.composer} install --working-dir ${dir.project}"
+                command="${cmd.composer} install --working-dir ${project.basedir}"
                 passthru="true"
         />
         <phingcall inheritRefs="true" target="composer-optimize">
@@ -94,7 +94,7 @@
         <phingcall inheritRefs="true" target="composer-self-update">
         </phingcall>
         <exec
-                command="${cmd.composer} update --working-dir ${dir.project}"
+                command="${cmd.composer} update --working-dir ${project.basedir}"
                 passthru="true"
         />
         <phingcall inheritRefs="true" target="composer-self-update">
