@@ -9,6 +9,7 @@
 namespace PostsBundle\Controller;
 
 
+use PostsBundle\Entity\Comment;
 use PostsBundle\Entity\Post;
 use PostsBundle\Entity\Subject;
 use PostsBundle\Repository\SubjectsRepository;
@@ -41,6 +42,7 @@ class SubjectController extends Controller
     {
         $subjRepository = $this->getDoctrine()->getRepository(Subject::class);
         $postRepository = $this->getDoctrine()->getRepository(Post::class);
+        $commentsRepository = $this->getDoctrine()->getRepository(Comment::class);
 
 
         /**
@@ -50,11 +52,11 @@ class SubjectController extends Controller
          *
          */
         $subj = $subjRepository->findOneBy(["subjName" => $request->get('subj')]);
-        $subjName = $subj ? $subj->getSubjName(): null;
+        $subjName = $subj ? $subj->getSubjName() : null;
 
         if (!$subjName) {
             //return new Response("Не найдено!". 404);
-            return new Response("<h1>{$request->get('subj')}</h1>", 404);
+            return new Response("404 <h1>{$request->get('subj')}</h1>", 404);
 
         }
 
@@ -63,9 +65,17 @@ class SubjectController extends Controller
          *
          * Всегда нужно возвращать имя темы,
          * чтобы работала форма создания постов.
+         * todo:: проверку можно сделать в шаблоне
          */
 
         $posts = $postRepository->findBySubj($subjName);
+
+        /** @var Post $post */
+        foreach ($posts->getIterator()->getArrayCopy() as $post) {
+            $post->setCommentCount(($commentsRepository->getCommentsCount($post))->getSingleScalarResult());
+
+        }
+
 
         if (!$posts) {
             return $this->render('PostsBundle:post:index.html.twig',
@@ -77,6 +87,7 @@ class SubjectController extends Controller
             return $this->render('PostsBundle:post:index.html.twig',
                 [
                     'posts' => $posts,
+
                     'maxPages' => $postRepository->getTotalBySubj($subjName),
                     'subj' => $subjName
                 ]);

@@ -2,6 +2,8 @@
 
 namespace PostsBundle\Repository;
 
+use PostsBundle\Entity\Post;
+
 /**
  * CommentsRepository
  *
@@ -14,7 +16,7 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
      * Все комменты поста.
      *
      * @param $postId
-     * @return array
+     * @return \Doctrine\ORM\Query
      */
     public function getCommentsForPost($postId)
     {
@@ -24,6 +26,16 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('post_id', $postId);
 
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery();
     }
+
+    public function getCommentsCount(Post $post)
+    {
+        $qb = $this->createQueryBuilder('c')->select('COUNT(c)')
+            ->where('c.post = :post_id')
+            ->setParameter('post_id', $post->getId());
+
+        return $qb->getQuery();
+    }
+
 }

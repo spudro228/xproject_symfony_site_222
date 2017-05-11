@@ -8,6 +8,8 @@ use PostsBundle\Entity\Post;
 use PostsBundle\Entity\Subject;
 use PostsBundle\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -29,9 +31,21 @@ class PostController extends Controller
     {
         $postsRepository = $this->getDoctrine()->getRepository(Post::class);
         $subjRepository = $this->getDoctrine()->getRepository(Subject::class);
+        $commentsRepository = $this->getDoctrine()->getRepository(Comment::class);
 
         $posts = $postsRepository->findAllByPage($currentPage, $limit); //$currentPage = sharing
 
+
+        /**
+         * Лол, с getArrayCopy работет быстрее, т.к. впринципе массивы быстрее итераторов.
+         * todo:: Если счетчик комментов понадобится хотябы еще один раз, то вынести его в отдельный сервис!!!
+         *
+         * @var Post $post
+         */
+        foreach ($posts->getIterator()->getArrayCopy() as $post) {
+            $post->setCommentCount(($commentsRepository->getCommentsCount($post))->getSingleScalarResult());
+
+        }
 
         return $this->render('PostsBundle:post:index.html.twig', [
             'posts' => $posts,
@@ -87,7 +101,7 @@ class PostController extends Controller
 
             ]);
         }
-
+        //todo:: !!! если форма не валидна , то нужно вернуться назад
         return $this->render('PostsBundle:post:new.html.twig', [
             'form' => $form->createView(),
             'subj' => $subject->getSubjName()
@@ -109,7 +123,7 @@ class PostController extends Controller
         return $this->render('PostsBundle:post:show.html.twig', [
             'post' => $post,
             'delete_form' => $deleteForm->createView(),
-            'comments' => $comments
+            'comments' => $comments->getResult()
         ]);
     }
 
@@ -155,8 +169,10 @@ class PostController extends Controller
             $em->remove($post);
             $em->flush();
         }
+        /*todo:: Запилить для одминки удаление постов через JSON*/
 
-        return $this->redirectToRoute('homepage');
+        //При удалении возвращаемся на странцу, с которой был отправлен запрос на удаление.
+        return $this->redirect($request->headers->get('referer'));
     }
 
 

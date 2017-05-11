@@ -2,22 +2,46 @@
 {% block body %}
     <h1>Post</h1>
 
-    <b>Id: </b><span>{{ post.id }}</span>
+    {#
+        <b>Id: </b><span>{{ post.id }}</span>
 
-    <b>Title: </b><span>{{ post.title }}</span>
-    <b>Author: </b><span><s>{{ post.author }}</s></span>
-    <b>Crate at: </b><span>{% if post.createAt %}{{ post.createAt|date('Y-m-d H:i:s') }}{% endif %}</span>
-    <br/>
-    <p>{{ post.text }}</p>
-
-    {# todo: вынести в отельнй подключаемы файл#}
-    {% if post.image is not null %}
-
-        <span>
-                 <a href="{{ absolute_url(asset("uploads/files/"~ post.image)) }}">{{ post.image }}</a></span>
+        <b>Title: </b><span>{{ post.title }}</span>
+        <b>Author: </b><span><s>{{ post.author }}</s></span>
+        <b>Crate at: </b><span>{% if post.createAt %}{{ post.createAt|date('Y-m-d H:i:s') }}{% endif %}</span>
         <br/>
-        <img src="{{ asset("uploads/files/"~ post.image) }}" width="20%" height="20%">
-    {% endif %}
+        <p>{{ post.text }}</p>
+
+        {% if post.image is not null %}
+
+            <span>
+                     <a href="{{ absolute_url(asset("uploads/files/"~ post.image)) }}">{{ post.image }}</a></span>
+            <br/>
+            <img src="{{ asset("uploads/files/"~ post.image) }}" width="20%" height="20%">
+        {% endif %}
+    #}
+    {# POST START #}
+    <div class="well">
+        <div class="media">
+            {% if post.image is not null %}
+                <a class="pull-left" href="{{ absolute_url(asset("uploads/files/"~ post.image)) }}">
+                    <img class="media-object" src="{{ asset("uploads/files/"~ post.image) }}" width="170px"
+                         height="150px">
+                </a>
+            {% endif %}
+            <div class="media-body">
+                <h4 class="media-heading">{{ post.title }}</h4>
+                <b>Id: </b><span><a href="{{ path('post_show', { 'id': post.id }) }}">{{ post.id }}</a></span>
+                <b>Author: </b><span class="text-right"><s>{{ post.author }}</s></span>
+                <p>{{ post.text }}</p>
+                <ul class="list-inline list-unstyled">
+                    <li>
+                        <span><i class="glyphicon glyphicon-calendar"></i>{{ post.createAt|date('Y-m-d H:i:s') }}</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
 
 
 

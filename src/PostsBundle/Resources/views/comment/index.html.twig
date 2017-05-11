@@ -1,52 +1,50 @@
-
 {% block body %}
     <h1>Comments list</h1>
-
-    <table>
-        <thead>
+    {% if comments is not empty %}
+        <table>
+            <thead>
             <tr>
-                <th>Id</th>
+                <th>ID</th>
                 <th>Author</th>
                 <th>Title</th>
                 <th>Text</th>
                 <th>Createat</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for comment in comments %}
-            <tr>
-                <td><a href="{{ path('comment_show', { 'id': comment.id }) }}">{{ comment.id }}</a></td>
-                <td>{{ comment.author }}</td>
-                <td>{{ comment.title }}</td>
-                <td>{{ comment.text }}</td>
-                <td>{% if comment.createAt %}{{ comment.createAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if comment.image is not null %}
-                        <span>
+            </thead>
+            <tbody>
+            {% for comment in comments %}
+                <tr>
+                    <td><a href="{{ path('comment_show', { 'id': comment.id }) }}">{{ comment.id }}</a></td>
+                    <td>{{ comment.author }}</td>
+                    <td>{{ comment.title }}</td>
+                    <td>{{ comment.text }}</td>
+                    <td>{% if comment.createAt %}{{ comment.createAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if comment.image is not null %}
+                            <span>
                             <a href="{{ absolute_url(asset("uploads/files/"~ comment.image)) }}">{{ comment.image }}</a></span>
-                        <br/>
-                        <img src="{{ asset("uploads/files/"~ comment.image) }}" width="20%" height="20%">
-                    {% endif %}
-                </td>
+                            <br/>
+                            <img src="{{ asset("uploads/files/"~ comment.image) }}" width="20%" height="20%">
+                        {% endif %}
+                    </td>
 
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('comment_show', { 'id': comment.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('comment_edit', { 'id': comment.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('comment_show', { 'id': comment.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('comment_edit', { 'id': comment.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>Комментариев еще нет.</h3>
+    {% endif %}
 
-    <ul>
-        <li>
-            {#{{ render(controller('PostsBundle:Comment:new')) }}#}
-        </li>
-    </ul>
+
 {% endblock %}

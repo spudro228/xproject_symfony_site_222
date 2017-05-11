@@ -27,9 +27,9 @@ class Post
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         //todo: добавить валидацию author
-        $metadata->addPropertyConstraint('title', new Assert\Length([
-                'max' => 50,
-                'maxMessage' => 'Your title cannot be longer than 50 characters.'
+        $metadata->addPropertyConstraint('title',
+            new Assert\Length([
+                'max' => 50
             ]
         ));
 
@@ -86,6 +86,13 @@ class Post
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post",  cascade={"persist","remove"})
      */
     private $comments;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $commentCount;
 
     /**
      * @ORM\ManyToOne(targetEntity="Subject")
@@ -245,6 +252,22 @@ class Post
     public function setSubject($subject)
     {
         $this->subject = $subject;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCommentCount()
+    {
+        return $this->commentCount;
+    }
+
+    /**
+     * @param int $commentCount
+     */
+    public function setCommentCount($commentCount)
+    {
+        $this->commentCount = $commentCount;
     }
 
 }

@@ -8,7 +8,6 @@
     {% if posts is not empty %}
         <div class="well">
             {% for post in posts %}
-
                 <div class="media">
                     {% if post.image is not null %}
                         <a class="pull-left" href="{{ absolute_url(asset("uploads/files/"~ post.image)) }}">
@@ -26,7 +25,7 @@
                                 <span><i class="glyphicon glyphicon-calendar"></i>{{ post.createAt|date('Y-m-d H:i:s') }}</span>
                             </li>
                             <li>|</li>
-                            <span><i class="glyphicon glyphicon-comment"></i> 000 comments</span>
+                            <span><i class="glyphicon glyphicon-comment"></i> {{ post.commentCount }} comments</span>
                             <li>|</li>
                             <li><a href="{{ path('post_show', { 'id': post.id }) }}"
                                    class="">show</a>
@@ -36,7 +35,6 @@
 
                 </div>
                 <hr>
-
             {% endfor %}
         </div>
 
