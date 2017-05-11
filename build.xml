@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- build xml -->
 
-<project name="symfony_site">
+<project name="symfony_site" default="composer-install">
 
 
     <!-- Properties -->
