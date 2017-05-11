@@ -2,6 +2,9 @@
 <!-- build xml -->
 
 <project name="symfony_site" default="main">
+
+    <property file="./build.properties"/>
+
     <!-- Properties -->
 
     <property name="dir.build" value="${project.basedir}"/>
@@ -39,24 +42,59 @@
               dir="./"/>
     </target>
 
-    <!-- MAIN -->
-    <target name="main" depends="prepare">
-        <echo>Target: main.</echo>
-        <!--<composer command="install" composer="composer">-->
-        <!--</composer>-->
-        <exec command="composer install --no-dev" dir="${dir.build}"
-              	passthru="true"
-              	logoutput="true"
-              	error="${dir.reports.build}/db.log"
-              	dir="${project.basedir}"
-		checkreturn="true"/>
+
+    <!---
+       ============ composer ==================
+   -->
+    <target name="composer-download">
+        <exec
+                command="curl -sS ${url.composer.download} | php -- --install-dir=${dir.composer.bin}"
+                passthru="true"
+        />
+        <exec
+                command="chmod +x ${dir.composer.bin}/${cmd.composer}"
+                passthru="true"
+        />
+        <phingcall inheritRefs="true" target="composer-self-update">
+        </phingcall>
+    </target>
+    <target name="composer-self-update">
+        <exec
+                command="${cmd.composer} self-update --working-dir ${dir.project}"
+                passthru="true"
+        />
+    </target>
+    <target name="composer-optimize">
+        <exec
+                command="${cmd.composer} dump-autoload --optimize --working-dir ${dir.project}"
+                passthru="true"
+        />
     </target>
 
-    <target name="composer.autoload" description="Update autoloader...">
-        <composer composer="composer" command="dump-autoload">
-            <arg value="--no-dev"/>
-        </composer>
+
+    <target name="composer-install">
+        <phingcall inheritRefs="true" target="composer-self-update">
+        </phingcall>
+        <exec
+                command="${cmd.composer} install --working-dir ${dir.project}"
+                passthru="true"
+        />
+        <phingcall inheritRefs="true" target="composer-optimize">
+        </phingcall>
     </target>
+    <target name="composer-update">
+        <phingcall inheritRefs="true" target="composer-self-update">
+        </phingcall>
+        <exec
+                command="${cmd.composer} update --working-dir ${dir.project}"
+                passthru="true"
+        />
+        <phingcall inheritRefs="true" target="composer-self-update">
+        </phingcall>
+        <phingcall inheritRefs="true" target="composer-optimize">
+        </phingcall>
+    </target>
+
 
     <target name="clear">
         <delete failonerror="true" verbose="true" includeemptydirs="true">
