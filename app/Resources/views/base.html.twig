@@ -15,6 +15,16 @@
     <script src="https://unpkg.com/vue"></script>
 
 </head>
+<style>
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 60px;
+        background-color: #f5f5f5;
+    }
+</style>
 <body>
 
 <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
@@ -30,9 +40,6 @@
             <ul class="nav navbar-nav mr-auto">
                 <li><a href="{{ path('homepage') }}">Home</a></li>
                 <li><a href="{{ path('post_index') }}">All posts</a></li>
-                <li><a href="#">Пункт 3</a></li>
-                <li><a href="#">Пункт 4</a></li>
-
             </ul>
             {{ render(controller('FOSUserBundle:Security:login')) }}
         </div>
@@ -40,18 +47,22 @@
     </div>
 </nav>
 
-<div class="container">
 
+<div class="container">
 
 
     {% block body %}{% endblock %}
     {% block javascripts %}{% endblock %}
 
     <hr>
-    <footer>
-        <p>© Company Dimas 2017</p>
-    </footer>
+
+
 </div>
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">© Company Dimas 2017</p>
+    </div>
+</footer>
 
 
 <!-- Latest compiled and minified JavaScript -->

@@ -1,50 +1,24 @@
 {% block body %}
     <h1>Comments list</h1>
     {% if comments is not empty %}
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Author</th>
-                <th>Title</th>
-                <th>Text</th>
-                <th>Createat</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for comment in comments %}
-                <tr>
-                    <td><a href="{{ path('comment_show', { 'id': comment.id }) }}">{{ comment.id }}</a></td>
-                    <td>{{ comment.author }}</td>
-                    <td>{{ comment.title }}</td>
-                    <td>{{ comment.text }}</td>
-                    <td>{% if comment.createAt %}{{ comment.createAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                    <td>{% if comment.image is not null %}
-                            <span>
+        {% for comment in comments %}
+            <div class="media-body">
+
+                <a href="{{ path('comment_show', { 'id': comment.id }) }}">{{ comment.id }}</a>
+                <span class="text-right">{{ post.author }}</span>
+                <h4 class="media-heading">{{ comment.title }}</h4>
+                <p>{{ comment.text }}</p>
+               <small> <span><i class="glyphicon glyphicon-calendar"></i>{{ comment.createAt|date('Y-m-d H:i:s') }}</span></small>
+                {% if comment.image is not null %}
+                    <span>
                             <a href="{{ absolute_url(asset("uploads/files/"~ comment.image)) }}">{{ comment.image }}</a></span>
-                            <br/>
-                            <img src="{{ asset("uploads/files/"~ comment.image) }}" width="20%" height="20%">
-                        {% endif %}
-                    </td>
+                    <br/>
+                    <img src="{{ asset("uploads/files/"~ comment.image) }}" width="20%" height="20%">
+                {% endif %}
+                <hr/>
+            </div>
+        {% endfor %}
 
-                    <td>
-                        <ul>
-                            <li>
-                                <a href="{{ path('comment_show', { 'id': comment.id }) }}">show</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('comment_edit', { 'id': comment.id }) }}">edit</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <h3>Комментариев еще нет.</h3>
     {% endif %}
-
 
 {% endblock %}

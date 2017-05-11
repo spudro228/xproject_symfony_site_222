@@ -35,7 +35,9 @@
                 <p>{{ post.text }}</p>
                 <ul class="list-inline list-unstyled">
                     <li>
-                        <span><i class="glyphicon glyphicon-calendar"></i>{{ post.createAt|date('Y-m-d H:i:s') }}</span>
+                        <small>
+                            <span><i class="glyphicon glyphicon-calendar"></i>{{ post.createAt|date('Y-m-d H:i:s') }}</span>
+                        </small>
                     </li>
                 </ul>
             </div>
