@@ -3,9 +3,12 @@
 
 <project name="symfony_site" default="main">
 
-    <property file="./build.properties"/>
 
     <!-- Properties -->
+    <!--
+        url.composer.download=https://getcomposer.org/installer
+        dir.composer.bin=/usr/local/bin
+        cmd.composer=composer.phar-->
 
     <property name="dir.build" value="${project.basedir}"/>
 
@@ -18,6 +21,11 @@
     <property name="dir.reports.pdepend" value="${dir.reports}/pdepend"/>
     <property name="dir.reports.coverage" value="${dir.reports}/coverage"/>
     <property name="dir.reports.build" value="${dir.reports}/build"/>
+
+    <!-- composer property -->
+    <property name="url.composer.download" value="https://getcomposer.org/installer"/>
+    <property name="dir.composer.bin" value="/usr/local/bin"/>
+    <property name="cmd.composer" value="composer.phar"/>
 
 
     <!-- ============================================  -->
