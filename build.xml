@@ -131,4 +131,13 @@
               checkreturn="true">
         </exec>
     </target>
+
+    <target name="cache.clear">
+        <exec command=" php bin/console cache:clear --env=prod --no-debug"
+              logoutput="true"
+              error="${dir.reports.build}/doctrine.log"
+              dir="${project.basedir}"
+              checkreturn="true"
+        />
+    </target>
 </project>
