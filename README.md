@@ -36,6 +36,15 @@ My project
     `php bin/console doctrine:database:create`
     `php bin/console doctrine:schema:create`
     
+4*. Чтобы сайт работал в таблице subjects должны быть записи.
+Можно запилить руками. 
+А можно просто загрузить фикстуры с тестовыми данными.
+
+
+    `php bin/console doctrine:fixture:load`
+
+* опционально
+    
 ВАЖНО!!!
 --------
 После каждого обновления из репозитор, на сервере в производственном режиме(production deployment), 
